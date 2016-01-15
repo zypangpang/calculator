@@ -1,4 +1,9 @@
-
+/*You cannot input a QString using "cin" due to the lack of QString overwrite of ">>", but you can debug it in this way:
+  //main.cpp
+  QString qstring="1+2*6";//no "="!
+  Expression e(qstring);
+  e.LegalAndCal();
+*/
 #ifndef EXPRESSION
 #define EXPRESSION
 #include <QString>
