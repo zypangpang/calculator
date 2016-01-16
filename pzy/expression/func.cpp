@@ -138,6 +138,20 @@ double Expression::FunCal(int b,int m,int e)
              sc.push(0); 
              break;
          case '-':
+             if(sn.empty())
+             {
+                 ++i;
+                 int b=i;
+                 while(expstring[i]<='9'&&expstring[i]>='0'||expstring[i]=='.')
+                 {
+                    ++i;
+                 }
+                 QString numstring=expstring.mid(b-1,i-b+1);
+                 --i;
+                 sn.push(numstring.toDouble());
+             }
+             else
+             {
               for(op=sc.top();PRIORITY[1][op]<=0;op=sc.top())
              {
                 double m=mypop(sn);
@@ -145,8 +159,8 @@ double Expression::FunCal(int b,int m,int e)
                 sn.push(myBasicCal(n,m,op));
                 sc.pop();
              }
-
              sc.push(1);
+             }
              break;
          case '*':
               for(op=sc.top();PRIORITY[2][op]<=0;op=sc.top())
@@ -185,7 +199,24 @@ double Expression::FunCal(int b,int m,int e)
              break;
          }
          case '(':
-             sc.push(4);
+         {
+             int b=i;
+             while(expstring[i]!=')')
+             {
+                 ++i;
+             }
+             QString temp=expstring.mid(b+1,i-b-1);
+             Expression et(temp);
+             if(!et.LegalAndCal())
+             {
+                 //error information.
+             }
+             sn.push(et.GetResult());
+
+             break;
+         }
+         }
+             /*sc.push(4);
              break;
          case ')':
              while((op=sc.top())!=4)
@@ -196,8 +227,8 @@ double Expression::FunCal(int b,int m,int e)
                  sc.pop();
              }
              sc.pop();
-             break;   
-         }
+             break;   */
+
 
      }
      while((op=sc.top())!=4)
@@ -212,9 +243,11 @@ double Expression::FunCal(int b,int m,int e)
      //need to complete!
      return true;
  }
- /*The negative number can be accomplished in the following way:
-  * when users press the "-"(not the subtraction key), the screen doesn't display a "0"
-  * before it, but there will be a "0" in the internal string.*/
+ /**************************************************************************/
+ //This version makes the input of "-" more naturally. The negative operator
+ //and the subtraction operator are integrated. Now you can use subtraction
+ //operator to represent the negative operator.
+ /**************************************************************************/
 
 
 
