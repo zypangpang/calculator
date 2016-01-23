@@ -9,7 +9,7 @@ using std::endl;
 
 int main()
 {
-    QString s="-1- sin{-3.1415/4}+(-1)+1+2*(6+7)*2=";
+    QString s="-1- 2{-3.1415/4}+(-1)+1+2*(6+7)*2=";
     Expression e(s);
     e.LegalAndCal();
     cout<<e.GetResult()<<endl;

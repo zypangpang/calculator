@@ -28,8 +28,10 @@ double Expression::myBasicCal(double a,double b,int op)
 }
 double Expression::FunCal(int b,int m,int e)
 {
-    int i=0;
-    for( i=0;i<30;++i)
+    int i=-1;
+    QString f=expstring.mid(b+1,m-b-1);
+    i=f.toInt();
+    /*for( i=0;i<30;++i)
     {
         int j=0;
         for( j=b+1;j<m;++j)
@@ -39,7 +41,7 @@ double Expression::FunCal(int b,int m,int e)
         }
         if(j>=m)
             break;
-    }
+    }*/
     Expression t(expstring.mid(m+1,e-m-1));
     if(!t.LegalAndCal())
     {
@@ -98,7 +100,7 @@ double Expression::FunCal(int b,int m,int e)
 
  bool Expression::LegalAndCal()
  {
-     double t=0;
+     //double t=0;
      int op=0;
      for(int i=0;expstring[i]!='\0';++i)
      {
@@ -117,7 +119,7 @@ double Expression::FunCal(int b,int m,int e)
          case '9':
          {
              int b=i;
-             while(expstring[i]<='9'&&expstring[i]>='0'||expstring[i]=='.')
+             while((expstring[i]<='9'&&expstring[i]>='0')||expstring[i]=='.')
              {
                 ++i;
              }
