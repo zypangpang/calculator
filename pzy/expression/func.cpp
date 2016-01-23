@@ -1,6 +1,6 @@
 /* you do not need to understand these definitions of functions.
  * A knowledge of how to use them is required.*/
-/* But if you find any fault or unreasonable code in this file,you can also tell me.*/
+/* But if you find any fault or unreasonable codes in this file,you can also tell me.*/
 
 #include<math.h>
 #include"expression.h"
@@ -192,7 +192,7 @@ double Expression::FunCal(int b,int m,int e)
          }
          case '(':
          {
-             int b=i;
+             /*int b=i;
              while(expstring[i]!=')'&&expstring[i]!='\0')
              {
                  ++i;
@@ -206,28 +206,40 @@ double Expression::FunCal(int b,int m,int e)
              }
              sn.push(et.GetResult());
 
+             break;*/
+             sc.push(4);
              break;
          }
-         default:
-             return false;
-         }
-             /*sc.push(4);
-             break;
          case ')':
-             while((op=sc.top())!=4)
+         {
+             while(sc.size()>1&&(op=sc.top())!=4)
              {
+                 if(sn.empty()) return false;
                  double m=mypop(sn);
+                 if(sn.empty()) return false;
                  double n=mypop(sn);
                  sn.push(myBasicCal(n,m,op));
                  sc.pop();
              }
              sc.pop();
-             break;   */
+             if(sc.empty()) return false;
+             break;
+         }
+         default:
+             return false;
+         }
+
 
 
      }
-     while((op=sc.top())!=4)
+     while(sc.size()>1)
      {
+         op=sc.top();
+         if(op==4)
+         {
+             sc.pop();
+             continue;
+         }
          if(sn.empty()) return false;
          double m=mypop(sn);
          if(sn.empty()) return false;
@@ -243,7 +255,7 @@ double Expression::FunCal(int b,int m,int e)
  bool Expression::MyToDouble(const QString& numstring)
  {
      bool ok=false;
-     int b=numstring.toDouble(&ok);
+     double b=numstring.toDouble(&ok);
      if(!ok) return false;
      sn.push(b);
      return true;

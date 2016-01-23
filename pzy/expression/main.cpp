@@ -9,7 +9,7 @@ using std::endl;
 
 int main()
 {
-    QString s="-(1.3+2.3)- tan{-3.1415/4}+(-1)+1+2*(6+7)*2+.1=";
+    QString s=".5*29+( tan{5+60}- sin{6+70})/10";
     Expression e(s);
     if(!e.LegalAndCal())
         cout<<"Expression error!"<<endl;
