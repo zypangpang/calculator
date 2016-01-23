@@ -29,9 +29,7 @@ double Expression::myBasicCal(double a,double b,int op)
 double Expression::FunCal(int b,int m,int e)
 {
     int i=-1;
-    QString f=expstring.mid(b+1,m-b-1);
-    i=f.toInt();
-    /*for( i=0;i<30;++i)
+    for( i=0;i<30;++i)
     {
         int j=0;
         for( j=b+1;j<m;++j)
@@ -41,11 +39,12 @@ double Expression::FunCal(int b,int m,int e)
         }
         if(j>=m)
             break;
-    }*/
+    }
+    if(i>=30) return NAN;
     Expression t(expstring.mid(m+1,e-m-1));
     if(!t.LegalAndCal())
     {
-        //error information
+        return false;
     }
     switch(i)
     {
@@ -104,9 +103,11 @@ double Expression::FunCal(int b,int m,int e)
      int op=0;
      for(int i=0;expstring[i]!='\0';++i)
      {
-         //t=0;
+         //deal with variables:if(expstring[i].isAlpha()) using the "Variable" class
+         //"Variable" class need to be completed.
          switch(expstring[i].unicode())
          {
+         case '.':
          case '0':
          case '1':
          case '2':
@@ -125,66 +126,53 @@ double Expression::FunCal(int b,int m,int e)
              }
              QString numstring=expstring.mid(b,i-b);
              --i;
-             sn.push(numstring.toDouble());
+             if(!MyToDouble(numstring)) return false;
              break;
          }
          case '+':
-
-             for(op=sc.top();PRIORITY[0][op]<=0;op=sc.top())
-             {
-                double m=mypop(sn);
-                double n=mypop(sn);
-                sn.push(myBasicCal(n,m,op));
-                sc.pop();
-             }
-             sc.push(0); 
+             if(!opcal(0)) return false;
              break;
          case '-':
              if(sn.empty())
              {
                  ++i;
                  int b=i;
-                 while(expstring[i]<='9'&&expstring[i]>='0'||expstring[i]=='.')
+                 if(expstring[i]=='(')
                  {
-                    ++i;
+                     while(expstring[i]!=')'&&expstring[i]!='\0')
+                     {
+                         ++i;
+                     }
+                     if(expstring[i]=='\0') return false;
+                     QString temp=expstring.mid(b+1,i-b-1);
+                     Expression et(temp);
+                     if(!et.LegalAndCal())
+                     {
+                         return false;
+                     }
+                     sn.push(0-et.GetResult());
                  }
-                 QString numstring=expstring.mid(b-1,i-b+1);
-                 --i;
-                 sn.push(numstring.toDouble());
+                 else
+                 {
+                    while((expstring[i]<='9'&&expstring[i]>='0')||expstring[i]=='.')
+                    {
+                        ++i;
+                    }
+                    QString numstring=expstring.mid(b-1,i-b+1);
+                    --i;
+                    if(!MyToDouble(numstring)) return false;
+                 }
              }
              else
              {
-              for(op=sc.top();PRIORITY[1][op]<=0;op=sc.top())
-             {
-                double m=mypop(sn);
-                double n=mypop(sn);
-                sn.push(myBasicCal(n,m,op));
-                sc.pop();
-             }
-             sc.push(1);
+                if(!opcal(1)) return false;
              }
              break;
          case '*':
-              for(op=sc.top();PRIORITY[2][op]<=0;op=sc.top())
-             {
-                double m=mypop(sn);
-                double n=mypop(sn);
-                sn.push(myBasicCal(n,m,op));
-                 sc.pop();
-             }
-
-             sc.push(2);
+             if(!opcal(2)) return false;
              break;
          case '/':
-             for(op=sc.top();PRIORITY[2][op]<=0;op=sc.top())
-             {
-                double m=mypop(sn);
-                double n=mypop(sn);
-                sn.push(myBasicCal(n,m,op));
-                sc.pop();
-             }
-
-             sc.push(3);
+             if(!opcal(3)) return false;
              break;
          case ' ':
          {
@@ -197,26 +185,31 @@ double Expression::FunCal(int b,int m,int e)
                  }
                  ++i;
              }
-             sn.push(FunCal(begin,middle,i));
+             double fcresult=FunCal(begin,middle,i);
+             if(fcresult==NAN) return false;
+             sn.push(fcresult);
              break;
          }
          case '(':
          {
              int b=i;
-             while(expstring[i]!=')')
+             while(expstring[i]!=')'&&expstring[i]!='\0')
              {
                  ++i;
              }
+             if(expstring[i]=='\0') return false;
              QString temp=expstring.mid(b+1,i-b-1);
              Expression et(temp);
              if(!et.LegalAndCal())
              {
-                 //error information.
+                 return false;
              }
              sn.push(et.GetResult());
 
              break;
          }
+         default:
+             return false;
          }
              /*sc.push(4);
              break;
@@ -235,14 +228,40 @@ double Expression::FunCal(int b,int m,int e)
      }
      while((op=sc.top())!=4)
      {
+         if(sn.empty()) return false;
          double m=mypop(sn);
+         if(sn.empty()) return false;
          double n=mypop(sn);
          sn.push(myBasicCal(n,m,op));
          sc.pop();
      }
      sc.pop();
      result=mypop(sn);
-     //need to complete!
+     return true;
+ }
+
+ bool Expression::MyToDouble(const QString& numstring)
+ {
+     bool ok=false;
+     int b=numstring.toDouble(&ok);
+     if(!ok) return false;
+     sn.push(b);
+     return true;
+ }
+
+ bool Expression::opcal(int currentop)
+ {
+    int op=-1;
+     for(op=sc.top();PRIORITY[currentop][op]<=0;op=sc.top())
+     {
+        if(sn.empty()) return false;
+        double m=mypop(sn);
+        if(sn.empty()) return false;
+        double n=mypop(sn);
+        sn.push(myBasicCal(n,m,op));
+        sc.pop();
+     }
+     sc.push(currentop);
      return true;
  }
  /**************************************************************************/

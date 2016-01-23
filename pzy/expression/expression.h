@@ -27,6 +27,8 @@ public:
     void ChangeExpresion(QString s){expstring=s;}
     void ResetExpresion(){expstring="";}
 private:
+    bool MyToDouble(const QString&);
+    bool opcal(int currentop);
     double myBasicCal(double,double,int);//calculation of "+,-,*,/"
     double FunCal(int b, int m, int e);//function calculation
     double mypop(stack<double>& s){double t=s.top();s.pop();return t;}//just an enhanced pop
