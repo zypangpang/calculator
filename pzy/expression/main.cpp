@@ -9,11 +9,15 @@ using std::endl;
 
 int main()
 {
-    QString s=".5*29+( tan{5+60}- sin{6+70})/10";
+    QString s="()";
     Expression e(s);
     if(!e.LegalAndCal())
         cout<<"Expression error!"<<endl;
     else
         cout<<e.GetResult()<<endl;
+    QString t="3+2";
+    e.SetExpression(t);
+    e.LegalAndCal();
+    cout<<e.GetResult()<<endl;
     return 0;
 }

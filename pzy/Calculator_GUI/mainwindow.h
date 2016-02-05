@@ -5,6 +5,7 @@
 #include<QMainWindow>
 #include<QtWidgets>
 #include"calwidget.h"
+#include"advanced_mainwindow.h"
 
 class Mainwindow:public QMainWindow
 {
@@ -13,9 +14,17 @@ public:
     explicit Mainwindow(QWidget *parent = 0);
     ~Mainwindow();
 private:
-
+    QToolBar* mainToolBar;
+    QAction* advancedMode;
+    QAction* inputExpressionMannual;
+    QAction* actAbout;
+    QAction* actHelp;
     CalWidget* cal;
-
+    AdvancedMainwindow* acal;
+private slots:
+    void doAdvancedMode();
+    void doHelp();
+    void doAbout();
 
 };
 

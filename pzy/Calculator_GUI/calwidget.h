@@ -7,7 +7,7 @@
 class QLineEdit;
 class QToolButton;
 class Button;
-
+class QGridLayout;
 
 class CalWidget:public QWidget
 {
@@ -15,7 +15,8 @@ class CalWidget:public QWidget
 
 public:
     CalWidget(QWidget* parent=0);
-    ~CalWidget();
+    ~CalWidget(){}
+    virtual void mySetLayout();
 private slots:
     void OrdinaryClicked();
     void FunctionClicked();
@@ -26,8 +27,12 @@ private slots:
     //void PowerClicked();
     void EqualClicked();
     void PointClicked();
-private:
+    void doInputMannual();
+
+protected:
+    QGridLayout* layout;
     Button* CreatButton(const QString& text, const char* slot);
+private:
     QLineEdit* display;
     Button* DigitButton[10];
     Expression expression;

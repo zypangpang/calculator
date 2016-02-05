@@ -11,12 +11,15 @@ const QString function[3]=
     "cos",
     "tan"
 };//Function array which can be added.
-const int PRIORITY[4][5]=
-{
-    {0,0,-1,-1,1},
-    {0,0,-1,-1,1},
-    {1,1,0,0,1},
-    {1,1,0,0,1},
+const int PRIORITY[7][7]=
+{  // +  -  *  /  (  ^  %
+    { 0, 0,-1,-1, 1,-1,-1},//+
+    { 0, 0,-1,-1, 1,-1,-1},//-
+    { 1, 1, 0, 0, 1,-1, 0},//*
+    { 1, 1, 0, 0, 1,-1, 0},//÷
+    {-1,-1,-1,-1, 0,-1,-1},//(
+    { 1, 1, 1, 1, 1, 1, 1},//^
+    { 1, 1, 0, 0, 1,-1, 0} //%
 };
 class Expression
 {
@@ -24,7 +27,7 @@ public:
     Expression(QString s=""):expstring(s),legal(true),result(0){sc.push(4);}
     bool LegalAndCal();//judge the validity of the expression and calculate,but now the judgement hasn't been finished.
     double GetResult(){return result;}
-    void ChangeExpresion(QString s){expstring=s;}
+    void SetExpression(QString s);
     void ResetExpresion(){expstring="";}
 private:
     bool MyToDouble(const QString&);

@@ -24,6 +24,10 @@ double Expression::myBasicCal(double a,double b,int op)
         return a*b;
     case 3:
         return a/b;
+    case 5:
+        return pow(a,b);
+    case 6:
+        return (int)a%(int)b;
     }
 }
 double Expression::FunCal(int b,int m,int e)
@@ -174,6 +178,12 @@ double Expression::FunCal(int b,int m,int e)
          case '/':
              if(!opcal(3)) return false;
              break;
+         case '%':
+             if(!opcal(6)) return false;
+             break;
+         case '^':
+             if(!opcal(5)) return false;
+             break;
          case ' ':
          {
              int begin=i,middle=0;
@@ -247,9 +257,24 @@ double Expression::FunCal(int b,int m,int e)
          sn.push(myBasicCal(n,m,op));
          sc.pop();
      }
-     sc.pop();
+     //sc.pop();
+     if(sn.empty())return false;
      result=mypop(sn);
      return true;
+ }
+
+ void Expression::SetExpression(QString s)
+ {
+     expstring=s;
+     while(!sn.empty())
+     {
+         sn.pop();
+     }
+     while(sc.size()!=1)
+     {
+         sc.pop();
+     }
+     legal=true;
  }
 
  bool Expression::MyToDouble(const QString& numstring)
