@@ -138,10 +138,18 @@ void CalWidget::PaiClicked()
 
 void CalWidget::EqualClicked()
 {
+    QString t=display->text();
+    if(t[0].isNumber()||t[0]=='('||t[0]==' '||t[0]=='-'||t[0]=='.')
+    {
     expression.SetExpression(display->text());
     if(expression.LegalAndCal())
     {
         display->setText(QString::number(expression.GetResult(),'g',10));
+    }
+    else
+    {
+        display->setText("表达式错误！");
+    }
     }
     else
     {
