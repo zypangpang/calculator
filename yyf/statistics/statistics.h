@@ -17,6 +17,8 @@ class statistics         //统计类
     double var;         //方差
     double Uvar;       //无偏方差
     double Svar;        //标准差
+    double midnum;      //中位数
+    double maxmin;     //极差
 public:
     statistics(){}
     ~ statistics() {}              //析构函数 ??
@@ -30,6 +32,8 @@ public:
     double Variance();      //求方差
     double UnVariance();    //无偏方差
     double StaVar();        //标准差
+    double Midnum();        //中位数
+    double Max_Min();       //极差
     QString toString(double num);    //类型转换
     QString renew();                //更新display
     void empty();                //清空容器

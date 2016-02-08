@@ -13,7 +13,7 @@ void statistics ::AddData(double data){   //添加数据
 }
 
 void statistics ::Erase(){               //清除上一个数据
-    sta.erase(sta.end()-1);
+    sta.pop_back();
 }
 QString statistics ::toString(double num){               //清除上一个数据
     ostringstream oss;
@@ -67,6 +67,27 @@ double statistics ::UnVariance(){
    return Uvar;
 }
 
+double statistics ::Midnum(){
+    if(sta.size()==0){
+        midnum=0;
+    } else{
+        int cnt=sta.size()/2;
+        sort(sta.begin(),sta.end(),less1);
+        if(sta.size()%2==0){
+            midnum=(sta.at(cnt-1)+sta.at(cnt))/2;
+        }else{
+            midnum=sta.at(cnt);
+        }
+    }
+    return midnum;
+}
+
+double statistics ::Max_Min(){
+    sort(sta.begin(),sta.end(),less1);
+    maxmin=sta.back()-sta.front();
+    return maxmin;
+}
+
 double statistics ::StaVar(){
     Svar=0.0;
    var=this->Variance();
@@ -87,8 +108,5 @@ QString statistics ::renew(){
 }
 
 void statistics ::empty(){
-    vector<double>::iterator it;
-    for(it=sta.begin();it!=sta.end();){
-        sta.erase(it);
-    }
+    sta.clear();
 }

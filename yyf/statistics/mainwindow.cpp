@@ -18,13 +18,13 @@ void MainWindow::doHelp()
     QMessageBox::information(this,"帮助","输入格式：\n1.每个数据后要有一个空格;\n"
                                        "2. 连续输入两个空格默认输入数据0\n"
                                        "3.每次改变数据后需重新按相应功能键来刷新结果\n"
-                                       "4.正数前不能加'+'\n"
-                                       "示例：(1.2 -2.3 4 2 )");
+                                       "示例："
+                                       "(1.2 -2.3 4 2 )");
 }
 
 void MainWindow::doAbout()
 {
-    QMessageBox::about(this,"关于","统计模块:设计者：杨云飞");
+    QMessageBox::about(this,"关于","统计模块:\n""设计者：杨云飞");
 }
 
 MainWindow::~MainWindow()
@@ -211,4 +211,16 @@ void MainWindow::on_button_rsort_clicked()
 {
     display=s.rSort();
     ui->input->setText(display);
+}
+
+void MainWindow::on_button_mid_clicked()
+{
+    double mid;
+    mid=s.Midnum();
+    ui->lcdNumber->display(mid);
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    ui->lcdNumber->display(s.Max_Min());
 }
