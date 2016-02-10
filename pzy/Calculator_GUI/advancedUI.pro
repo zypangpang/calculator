@@ -5,7 +5,9 @@ HEADERS += calwidget.h \
     expression.h \
     advanced_mainwindow.h \
     advanced_calwidget.h \
-    mainwindow.h
+    mainwindow.h \
+    st_mainwindow.h \
+    statistics.h
 
 SOURCES += main.cpp \
     calwidget.cpp \
@@ -13,4 +15,9 @@ SOURCES += main.cpp \
     expressionfunc.cpp \
     advanced_mainwindow.cpp \
     advanced_calwidget.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    st_mainwindow.cpp \
+    statistics.cpp
+FORMS    += \
+    STMainWindow.ui
+

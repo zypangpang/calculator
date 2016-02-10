@@ -33,18 +33,22 @@ double Expression::myBasicCal(double a,double b,int op)
 double Expression::FunCal(int b,int m,int e)
 {
     int i=-1;
-    for( i=0;i<30;++i)
+    QString functemp=expstring.mid(b+1,m-b-1);
+    for( i=0;i<FuncNumber;++i)
     {
-        int j=0;
+        if(functemp==function[i])
+            break;
+        /*int j=0;
         for( j=b+1;j<m;++j)
         {
             if(function[i][j-b-1]!=expstring[j])
                 break;
         }
         if(j>=m)
-            break;
+            break;*/
+
     }
-    if(i>=30) return NAN;
+    if(i>=FuncNumber) return NAN;
     Expression t(expstring.mid(m+1,e-m-1));
     if(!t.LegalAndCal())
     {
@@ -58,7 +62,36 @@ double Expression::FunCal(int b,int m,int e)
         return cos(t.GetResult());
     case 2:
         return tan(t.GetResult());
-
+    case 3:
+        return asin(t.GetResult());
+    case 4:
+        return acos(t.GetResult());
+    case 5:
+        return atan(t.GetResult());
+    case 6:
+        return exp(t.GetResult());
+    case 7:
+        return sqrt(t.GetResult());
+    case 8:
+        return log(t.GetResult());
+    case 9:
+        return log10(t.GetResult());
+    case 10:
+        return ceil(t.GetResult());
+    case 11:
+        return floor(t.GetResult());
+    case 12:
+        return fabs(t.GetResult());
+    case 13:
+    {
+        long s=1;
+        int x=t.GetResult();
+        for(;x>=1;--x)
+            s*=x;
+        return s;
+    }
+    case 14:
+        return log2(t.GetResult());
     }
 }
 
@@ -196,7 +229,7 @@ double Expression::FunCal(int b,int m,int e)
                  ++i;
              }
              double fcresult=FunCal(begin,middle,i);
-             if(fcresult==NAN) return false;
+             if(fcresult!=fcresult) return false;
              sn.push(fcresult);
              break;
          }

@@ -14,6 +14,7 @@ private slots:
     void backToBasicClicked();
     void doAbout();
     void helpClicked();
+    void doStatistic();
 private:
     //QToolBar* mainTool;
     QMenuBar* mbar;
@@ -28,6 +29,7 @@ private:
     QAction* inputExpressionMannual;
     QAction* actAbout;
     QAction* actHelp;
+    QAction* actStatistic;
     AdvancedCalwidget* acal;
 
 

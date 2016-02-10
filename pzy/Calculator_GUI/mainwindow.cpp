@@ -17,6 +17,7 @@ Mainwindow::Mainwindow(QWidget* parent):QMainWindow(parent)
    QSize size=this->sizeHint();
    setFixedSize(size);
    setWindowTitle("计算器");
+   acal=new AdvancedMainwindow(this);
 }
 
 Mainwindow::~Mainwindow()
@@ -27,16 +28,17 @@ Mainwindow::~Mainwindow()
 void Mainwindow::doAdvancedMode()
 {
     this->hide();
-    acal=new AdvancedMainwindow(this);
     acal->show();
 }
 
 void Mainwindow::doHelp()
 {
-    QMessageBox::information(this,"帮助","输入格式：\n1.函数名前要有一个空格;\n"
+    QMessageBox::information(this,"帮助","输入格式：\n1.函数名前要有一个空格\n"
                                        "2.用{ }框起用于函数的表达式\n"
                                        "3.不需要等号\n"
                                        "4.正数前不能加'+'\n"
+                                       "5.仅支持界面所有的内置函数的计算，\n"
+                                       "   若要计算其它函数，请使用自定义函数\n"
                                        "示例：\n1+ tan{(3+6)*5}");
 }
 

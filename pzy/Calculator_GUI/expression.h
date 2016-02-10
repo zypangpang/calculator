@@ -4,12 +4,25 @@
 #include <QString>
 #include <stack>
 #include <queue>
+const int FuncNumber=15;
 using std::stack;
-const QString function[3]=
+const QString function[FuncNumber]=
 {
     "sin",
     "cos",
-    "tan"
+    "tan",
+    "arcsin",
+    "arccos",
+    "arctan",
+    "exp",
+    "sqrt",
+    "ln",
+    "log10",
+    "ceil",
+    "floor",
+    "abs",
+    "fac",
+    "log2"
 };//Function array which can be added.
 const int PRIORITY[7][7]=
 {  // +  -  *  /  (  ^  %

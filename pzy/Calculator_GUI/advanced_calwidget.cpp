@@ -49,11 +49,13 @@ AdvancedCalwidget::AdvancedCalwidget(CalWidget *parent):CalWidget(parent)
     rlayout->addWidget(UpButton,1,0);
     rlayout->addWidget(DownButton,2,0);
     alayout=new QHBoxLayout;
-    QLabel*seperator=new QLabel;
-    seperator->setFrameShape(QFrame::VLine);
+    QFrame* line=new QFrame(this);
+    line->setFrameShape(QFrame::VLine);
+    line->setFrameShadow(QFrame::Sunken);
+    //seperator->setFrameShape(QFrame::VLine);
     alayout->addLayout(layout);;
     //alayout->addSpacing(10);
-    alayout->addWidget(seperator);
+    alayout->addWidget(line);
     alayout->addLayout(rlayout);
 
 }

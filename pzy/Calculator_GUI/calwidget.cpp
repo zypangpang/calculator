@@ -21,7 +21,7 @@ CalWidget::CalWidget(QWidget *parent):QWidget(parent)
     Button* MulButton=CreatButton(tr("*"),SLOT(OrdinaryClicked()));
     Button* DivButton=CreatButton(tr("/"),SLOT(OrdinaryClicked()));
     Button* PowButton=CreatButton(tr("^"),SLOT(OrdinaryClicked()));
-    Button* SqrtButton=CreatButton(tr("Sqrt"),SLOT(FunctionClicked()));
+    Button* SqrtButton=CreatButton(tr("sqrt"),SLOT(FunctionClicked()));
     Button* LnButton=CreatButton(tr("ln"),SLOT(FunctionClicked()));
     Button* EqualButton=CreatButton(tr("="),SLOT(EqualClicked()));
     Button* PaiButton=CreatButton(tr("Pai"),SLOT(PaiClicked()));

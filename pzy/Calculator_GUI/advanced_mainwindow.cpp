@@ -1,5 +1,6 @@
 
 #include"mainwindow.h"
+#include"st_mainwindow.h"
 
 AdvancedMainwindow::AdvancedMainwindow(QMainWindow *parent):QMainWindow(parent)
 {
@@ -25,6 +26,7 @@ AdvancedMainwindow::AdvancedMainwindow(QMainWindow *parent):QMainWindow(parent)
     inputExpressionMannual=mToolBar->addAction("手动输入",acal,SLOT(doInputMannual()));
     actAbout=mToolBar->addAction("关于",this,SLOT(doAbout()));
     actHelp=mToolBar->addAction("帮助",this,SLOT(helpClicked()));
+    actStatistic=menuStatistic->addAction("统计功能",this,SLOT(doStatistic()));
     setMenuBar(mbar);
     addToolBar(Qt::TopToolBarArea,mToolBar);
 
@@ -49,9 +51,18 @@ void AdvancedMainwindow::doAbout()
 
 void AdvancedMainwindow::helpClicked()
 {
-    QMessageBox::information(this,"帮助","输入格式：\n1.函数名前要有一个空格;\n"
+    QMessageBox::information(this,"帮助","输入格式：\n1.函数名前要有一个空格\n"
                                        "2.用{ }框起用于函数的表达式\n"
                                        "3.不需要等号\n"
                                        "4.正数前不能加'+'\n"
+                                       "5.仅支持界面所有的内置函数的计算，\n"
+                                       "   若要计算其它函数，请使用自定义函数\n"
                                        "示例：\n1+ tan{(3+6)*5}");
+}
+
+void AdvancedMainwindow::doStatistic()
+{
+    STMainWindow* stmainwindow=new STMainWindow(this);
+    stmainwindow->show();
+    stmainwindow->setAttribute(Qt::WA_DeleteOnClose,true);
 }
