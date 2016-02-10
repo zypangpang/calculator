@@ -14,6 +14,7 @@ STMainWindow::STMainWindow(QMainWindow *parent) :
     addToolBar(mainToolBar);
     mainToolBar->setFloatable(false);
     mainToolBar->setMovable(false);
+    setFixedSize(404,279);
 
 }
 

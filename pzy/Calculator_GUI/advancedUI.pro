@@ -7,7 +7,10 @@ HEADERS += calwidget.h \
     advanced_calwidget.h \
     mainwindow.h \
     st_mainwindow.h \
-    statistics.h
+    statistics.h \
+    randomwidget.h \
+    randmainwindow.h
+
 
 SOURCES += main.cpp \
     calwidget.cpp \
@@ -17,7 +20,8 @@ SOURCES += main.cpp \
     advanced_calwidget.cpp \
     mainwindow.cpp \
     st_mainwindow.cpp \
-    statistics.cpp
-FORMS    += \
-    STMainWindow.ui
+    statistics.cpp \
+    randomwidget.cpp
+FORMS    += STMainWindow.ui \
+    randomwidget.ui
 

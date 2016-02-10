@@ -12,6 +12,8 @@ public:
     AdvancedCalwidget(CalWidget* parent=0);
     void mySetLayout();
     ~AdvancedCalwidget(){}
+private slots:
+    void RandClicked();
 private:
     QHBoxLayout* alayout;
     bool isVirtualCal;

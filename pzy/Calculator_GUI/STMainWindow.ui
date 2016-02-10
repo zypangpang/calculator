@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>404</width>
-    <height>303</height>
+    <height>279</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -395,7 +395,6 @@
     </property>
    </widget>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>

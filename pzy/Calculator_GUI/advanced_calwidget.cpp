@@ -2,6 +2,7 @@
 //#include <QLayout>
 #include <QtWidgets>
 #include "advanced_calwidget.h"
+#include "randmainwindow.h"
 
 AdvancedCalwidget::AdvancedCalwidget(CalWidget *parent):CalWidget(parent)
 {
@@ -22,6 +23,7 @@ AdvancedCalwidget::AdvancedCalwidget(CalWidget *parent):CalWidget(parent)
     Button* FractionButton=CreatButton("|",SLOT(OrdinaryClicked()));//attention,symbol!
     Button* UpButton=CreatButton("↑",SLOT(UpClicked()));
     Button* DownButton=CreatButton("↓",SLOT(DownClicked()));
+    Button* RandButton=CreatButton("rand",SLOT(RandClicked()));
 
     QLabel* label=new QLabel("\t函数功能键区\t");
     QFont font=label->font();
@@ -48,6 +50,7 @@ AdvancedCalwidget::AdvancedCalwidget(CalWidget *parent):CalWidget(parent)
     rlayout->addWidget(FractionButton,5,3);
     rlayout->addWidget(UpButton,1,0);
     rlayout->addWidget(DownButton,2,0);
+    rlayout->addWidget(RandButton,3,0);
     alayout=new QHBoxLayout;
     QFrame* line=new QFrame(this);
     line->setFrameShape(QFrame::VLine);
@@ -63,4 +66,11 @@ AdvancedCalwidget::AdvancedCalwidget(CalWidget *parent):CalWidget(parent)
 void AdvancedCalwidget::mySetLayout()
 {
     setLayout(alayout);
+}
+
+void AdvancedCalwidget::RandClicked()
+{
+    RandMainwindow* randmwindow=new RandMainwindow(this);
+    randmwindow->setAttribute(Qt::WA_DeleteOnClose,true);
+    randmwindow->show();
 }
