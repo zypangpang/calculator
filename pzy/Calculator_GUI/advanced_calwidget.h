@@ -9,16 +9,18 @@ class AdvancedCalwidget:public CalWidget
 {
     Q_OBJECT
 public:
-    AdvancedCalwidget(CalWidget* parent=0);
+    AdvancedCalwidget(QWidget* parent=0);
     void mySetLayout();
     ~AdvancedCalwidget(){}
 private slots:
     void RandClicked();
+    void formatButtonClicked();
+    void radBoxStatusChanged(int);
+    //void isRoundChanged(int);
 private:
     QHBoxLayout* alayout;
     bool isVirtualCal;
     bool isFractionCal;
-    bool isRad;
     int floatFormat;
 };
 

@@ -30,11 +30,11 @@ double Expression::myBasicCal(double a,double b,int op)
         return (int)a%(int)b;
     }
 }
-double Expression::FunCal(int b,int m,int e)
+int Expression::FunNum(int b,int m)
 {
     int i=-1;
     QString functemp=expstring.mid(b+1,m-b-1);
-    for( i=0;i<FuncNumber;++i)
+    for( i=8;i<FuncNumber;++i)
     {
         if(functemp==function[i])
             break;
@@ -48,50 +48,80 @@ double Expression::FunCal(int b,int m,int e)
             break;*/
 
     }
-    if(i>=FuncNumber) return NAN;
-    Expression t(expstring.mid(m+1,e-m-1));
-    if(!t.LegalAndCal())
+    if(i>=FuncNumber) return -1;
+    return i;
+}
+    //Expression t(expstring.mid(m+1,e-m-1));
+    /*if(!t.LegalAndCal())
     {
         return false;
-    }
-    switch(i)
+    }*/
+double Expression::FunCal(int funcnum, double x)
+{
+    funcnum-=8;
+    switch(funcnum)
     {
     case 0:
-        return sin(t.GetResult());
+    {
+        if(!isRad)
+            return sin(x/180*PAI);
+        return sin(x);
+    }
     case 1:
-        return cos(t.GetResult());
+        if(!isRad)
+            return cos(x/180*PAI);
+        return cos(x);
     case 2:
-        return tan(t.GetResult());
+    {
+        double tResult=x;
+        if(!isRad)
+            tResult=tResult/180*PAI;
+        if(tan(tResult)>1e+15)
+            return INFINITY;
+        else if(tan(tResult)<-1e+15)
+            return -INFINITY;
+        else
+            return tan(tResult);
+    }
     case 3:
-        return asin(t.GetResult());
+        if(!isRad)
+            return asin(x)/PAI*180;
+        return asin(x);
     case 4:
-        return acos(t.GetResult());
+        if(!isRad)
+            return acos(x)/PAI*180;
+        return acos(x);
     case 5:
-        return atan(t.GetResult());
+        if(!isRad)
+            return atan(x)/PAI*180;
+        return atan(x);
     case 6:
-        return exp(t.GetResult());
+        return exp(x);
     case 7:
-        return sqrt(t.GetResult());
+        return sqrt(x);
     case 8:
-        return log(t.GetResult());
+        return log(x);
     case 9:
-        return log10(t.GetResult());
+        return log10(x);
     case 10:
-        return ceil(t.GetResult());
+        return ceil(x);
     case 11:
-        return floor(t.GetResult());
+        return floor(x);
     case 12:
-        return fabs(t.GetResult());
+        return fabs(x);
     case 13:
     {
-        long s=1;
-        int x=t.GetResult();
-        for(;x>=1;--x)
-            s*=x;
+        if(x<0) return NAN;
+        if(x==0) return 1;
+        unsigned long long s=1,y=(unsigned long long)x;
+        for(;y>=1;--y)
+            s*=y;
         return s;
     }
     case 14:
-        return log2(t.GetResult());
+        return log2(x);
+    default:
+        return NAN;
     }
 }
 
@@ -170,7 +200,7 @@ double Expression::FunCal(int b,int m,int e)
              if(!opcal(0)) return false;
              break;
          case '-':
-             if(sn.empty())
+             /*if(sn.empty())
              {
                  ++i;
                  int b=i;
@@ -201,9 +231,12 @@ double Expression::FunCal(int b,int m,int e)
                  }
              }
              else
+             {*/
+             if(i-1<0||expstring[i-1]=='(')
              {
-                if(!opcal(1)) return false;
+                 sn.push(0);
              }
+             if(!opcal(1)) return false;
              break;
          case '*':
              if(!opcal(2)) return false;
@@ -219,18 +252,19 @@ double Expression::FunCal(int b,int m,int e)
              break;
          case ' ':
          {
-             int begin=i,middle=0;
-             while(expstring[i]!='}')
+             int begin=i;
+             while(expstring[i]!='(')
              {
-                 if(expstring[i]=='{')
-                 {
-                     middle=i;
-                 }
-                 ++i;
+                 if(expstring[i]=='\0')
+                     return false;
+                ++i;
              }
-             double fcresult=FunCal(begin,middle,i);
-             if(fcresult!=fcresult) return false;
-             sn.push(fcresult);
+             int fnum=FunNum(begin,i);
+             if(fnum==-1) return false;
+             //if(fcresult!=fcresult||fcresult+1==fcresult) return false;
+             //sn.push(fcresult);
+             sc.push(fnum);
+             sc.push(4);
              break;
          }
          case '(':
@@ -257,6 +291,17 @@ double Expression::FunCal(int b,int m,int e)
          {
              while(sc.size()>1&&(op=sc.top())!=4)
              {
+                 if(op>7)
+                 {
+                     if(sn.empty()) return false;
+                     double m=mypop(sn);
+                     m=FunCal(op,m);
+                     sn.push(m);
+                     sc.pop();
+                     if(m!=m||m+1==m)
+                        return false;
+                     continue;
+                 }
                  if(sn.empty()) return false;
                  double m=mypop(sn);
                  if(sn.empty()) return false;
@@ -283,6 +328,17 @@ double Expression::FunCal(int b,int m,int e)
              sc.pop();
              continue;
          }
+         if(op>7)
+         {
+             if(sn.empty()) return false;
+             double m=mypop(sn);
+             m=FunCal(op,m);
+             sn.push(m);
+             sc.pop();
+             if(m!=m||m+1==m)
+                 return false;
+             continue;
+         }
          if(sn.empty()) return false;
          double m=mypop(sn);
          if(sn.empty()) return false;
@@ -295,6 +351,14 @@ double Expression::FunCal(int b,int m,int e)
      result=mypop(sn);
      return true;
  }
+
+ /*double Expression::GetResult()
+ {
+     if(result+1==result||result!=result)
+         return result;
+     return result=myRound(result,15,EPS);
+     return result;
+ }*/
 
  void Expression::SetExpression(QString s)
  {
@@ -321,7 +385,17 @@ double Expression::FunCal(int b,int m,int e)
 
  bool Expression::opcal(int currentop)
  {
-    int op=-1;
+    int op=sc.top();
+    if(op>7)
+    {
+        if(sn.empty()) return false;
+        double m=mypop(sn);
+        m=FunCal(op,m);
+        if(m!=m||m+1==m)
+           return false;
+        sn.push(m);
+        sc.pop();
+    }
      for(op=sc.top();PRIORITY[currentop][op]<=0;op=sc.top())
      {
         if(sn.empty()) return false;
@@ -334,6 +408,20 @@ double Expression::FunCal(int b,int m,int e)
      sc.push(currentop);
      return true;
  }
+ /*double myRound(double indata,int precision,double eps)
+ {
+     __int64 magni=1;
+     for(int i=0;i<precision;++i)
+     {
+         magni*=10;
+     }
+     if(indata>=eps)
+         return (__int64)(indata*magni+0.5)/((double)magni);
+     else if(indata<=-eps)
+         return (__int64)(indata*magni-0.5)/((double)magni);
+     else
+         return 0;
+ }*/
  /**************************************************************************/
  //This version makes the input of "-" more naturally. The negative operator
  //and the subtraction operator are integrated. Now you can use subtraction

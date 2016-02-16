@@ -1,10 +1,12 @@
 #include <QtWidgets>
 #include "calwidget.h"
 #include "button.h"
-
-
+#include "mainwindow.h"
 CalWidget::CalWidget(QWidget *parent):QWidget(parent)
 {
+    floatNumber=6;
+    //isRound=false;
+    formatState=FORMAT_MIXED;
     //EqualState=false;
     display=new QLineEdit("0");
     display->setReadOnly(true);
@@ -26,8 +28,10 @@ CalWidget::CalWidget(QWidget *parent):QWidget(parent)
     Button* EqualButton=CreatButton(tr("="),SLOT(EqualClicked()));
     Button* PaiButton=CreatButton(tr("Pai"),SLOT(PaiClicked()));
     Button* PointButton=CreatButton(tr("."),SLOT(PointClicked()));
-    Button* LBBracketButton=CreatButton(tr("{"),SLOT(OrdinaryClicked()));
-    Button* RBBracketButton=CreatButton(tr("}"),SLOT(OrdinaryClicked()));
+    //Button* LBBracketButton=CreatButton(tr("{"),SLOT(OrdinaryClicked()));
+    //Button* RBBracketButton=CreatButton(tr("}"),SLOT(OrdinaryClicked()));
+    Button* UpButton=CreatButton("↑",SLOT(upClicked()));
+    Button* DownButton=CreatButton("↓",SLOT(downClicked()));
     Button* LBracketButton=CreatButton(tr("("),SLOT(OrdinaryClicked()));
     Button* RBracketButton=CreatButton(tr(")"),SLOT(OrdinaryClicked()));
     Button* ModButton=CreatButton(tr("%"),SLOT(OrdinaryClicked()));
@@ -58,8 +62,10 @@ CalWidget::CalWidget(QWidget *parent):QWidget(parent)
     layout->addWidget(DigitButton[0],5,0);
     layout->addWidget(EqualButton,5,2);
     layout->addWidget(PointButton,5,1);
-    layout->addWidget(LBBracketButton,1,4);
-    layout->addWidget(RBBracketButton,2,4);
+    //layout->addWidget(LBBracketButton,1,4);
+    //layout->addWidget(RBBracketButton,2,4);
+    layout->addWidget(UpButton,1,4);
+    layout->addWidget(DownButton,2,4);
     layout->addWidget(LBracketButton,3,4);
     layout->addWidget(RBracketButton,4,4);
     layout->addWidget(ModButton,5,4);
@@ -69,6 +75,55 @@ Button* CalWidget::CreatButton(const QString &text, const char *slot)
     Button* button=new Button(text);
     connect(button,SIGNAL(clicked()),this,slot);
     return button;
+}
+
+void CalWidget::formatOutput(int state, double n)
+{
+    /*if(isRound)
+    {
+    double eps=1;
+    double tn=n;
+
+    switch(state)
+    {
+    case FORMAT_FLOAT:
+    case FORMAT_SCIENCE:
+    {
+        for(int i=0;i<floatNumber;++i)
+        {
+            eps*=0.1;
+        }
+        n=myRound(n,floatNumber,eps);
+        break;
+    }
+    case FORMAT_MIXED:
+    {
+        int j=0;
+        for(;tn>=1;++j)
+        {
+            tn*=0.1;
+        }
+        for(int i=0;i<floatNumber-j;++i)
+        {
+            eps*=0.1;
+        }
+        n=myRound(n,floatNumber-j,eps);
+        break;
+    }
+    }
+    }*/
+    switch(state)
+    {
+    case FORMAT_FLOAT:
+        display->setText(QString::number(n,'f',floatNumber));
+        break;
+    case FORMAT_SCIENCE:
+        display->setText(QString::number(n,'e',floatNumber));
+        break;
+    case FORMAT_MIXED:
+        display->setText(QString::number(n,'g',floatNumber));
+        break;
+    }
 }
 
 void CalWidget::mySetLayout()
@@ -99,12 +154,12 @@ void CalWidget::FunctionClicked()
     Button* t=qobject_cast<Button*>(sender());
     if(display->text()=="0")
     {
-        display->setText(" "+t->text());
+        display->setText(" "+t->text()+"(");
 
     }
     else
     {
-        display->setText(display->text()+" "+t->text());
+        display->setText(display->text()+" "+t->text()+"(");
     }
 }
 
@@ -127,12 +182,12 @@ void CalWidget::PaiClicked()
 {
     if(display->text()=="0")
     {
-        display->setText("3.1415926535");
+        display->setText(QString::number(PAI,'f',17));
 
     }
     else
     {
-        display->setText(display->text()+"3.1415926535");
+        display->setText(display->text()+QString::number(PAI,'f',17));
     }
 }
 
@@ -144,16 +199,22 @@ void CalWidget::EqualClicked()
     expression.SetExpression(display->text());
     if(expression.LegalAndCal())
     {
-        display->setText(QString::number(expression.GetResult(),'g',10));
+        double tresult=expression.GetResult();
+        if(tresult!=tresult||tresult+1==tresult)
+            display->setText("表达式错误或数值溢出！");
+        else
+            formatOutput(formatState,expression.GetResult());
+        //display->setText(QString::number(expression.GetResult(),'e',floatNumber));
+
     }
     else
     {
-        display->setText("表达式错误！");
+        display->setText("表达式错误或数值溢出！");
     }
     }
     else
     {
-        display->setText("表达式错误！");
+        display->setText("表达式错误或数值溢出！");
     }
 }
 
@@ -165,18 +226,68 @@ void CalWidget::PointClicked()
 void CalWidget::doInputMannual()
 {
     bool ok;
-    QString text=QInputDialog::getText(this,tr("手动输入"),tr("表达式："),QLineEdit::Normal,tr("1+ sin{30}"),&ok);
+    QString text=QInputDialog::getText(this,tr("手动输入"),tr("表达式："),QLineEdit::Normal,tr("例:-1+ sin( sqrt(2)+1)"),&ok);
     if(ok&&!text.isEmpty())
     {
     expression.SetExpression(text);
     if(expression.LegalAndCal())
     {
-        display->setText(QString::number(expression.GetResult(),'g',10));
+        double tresult=expression.GetResult();
+        if(tresult!=tresult||tresult+1==tresult)
+            display->setText("表达式错误或数值溢出！");
+        else
+            formatOutput(formatState,expression.GetResult());
     }
     else
     {
-        display->setText("表达式错误！");
+        display->setText("表达式错误或数值溢出！");
     }
+    }
+}
+
+void CalWidget::doFormatCheckBoxChanged(int State)
+{
+    if(State==Qt::Checked)
+        formatState=FORMAT_SCIENCE;
+    else if(State==Qt::Unchecked)
+        formatState=FORMAT_FLOAT;
+    else
+        formatState=FORMAT_MIXED;
+    QString t=display->text();
+    bool ok;
+    double tn=t.toDouble(&ok);
+    if(ok)
+    {
+        formatOutput(formatState,tn);
+    }
+}
+
+/*void CalWidget::NegtiveClicked()
+{
+    if(display->text()=="0")
+    {
+        display->setText(" -(");
+
+    }
+    else
+    {
+        display->setText(display->text()+" -(");
+    }
+}*/
+
+void CalWidget::formatButtonClicked()
+{
+    bool ok;
+    int t=qobject_cast<Mainwindow*>(this->parent())->formatEdit->text().toInt(&ok);
+    if(ok==true&&t<=15&&t>=0)
+    {
+        floatNumber=t;
+    }
+    else
+    {
+        qobject_cast<Mainwindow*>(this->parent())->formatEdit->setText(QString::number(floatNumber));
+        QMessageBox::information(this,"错误","输入数字错误！\n"
+                                           "请输入大于等于0小于等于15的整数！");
     }
 }
 

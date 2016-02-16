@@ -13,10 +13,14 @@ class Mainwindow:public QMainWindow
 public:
     explicit Mainwindow(QWidget *parent = 0);
     ~Mainwindow();
+    QLineEdit* formatEdit;
 private:
     QToolBar* mainToolBar;
+    //QStatusBar* statusBar;
+    //QCheckBox* formatCheckBox;
+    //QPushButton* formatButton;
     QAction* advancedMode;
-    QAction* inputExpressionMannual;
+    //QAction* inputExpressionMannual;
     QAction* actAbout;
     QAction* actHelp;
     CalWidget* cal;
@@ -25,6 +29,7 @@ private slots:
     void doAdvancedMode();
     void doHelp();
     void doAbout();
+
 
 };
 

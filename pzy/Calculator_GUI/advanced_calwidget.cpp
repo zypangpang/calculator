@@ -3,8 +3,9 @@
 #include <QtWidgets>
 #include "advanced_calwidget.h"
 #include "randmainwindow.h"
+#include "advanced_mainwindow.h"
 
-AdvancedCalwidget::AdvancedCalwidget(CalWidget *parent):CalWidget(parent)
+AdvancedCalwidget::AdvancedCalwidget(QWidget *parent):CalWidget(parent)
 {
     Button* SinButton=CreatButton("sin",SLOT(FunctionClicked()));
     Button* CosButton=CreatButton("cos",SLOT(FunctionClicked()));
@@ -21,8 +22,7 @@ AdvancedCalwidget::AdvancedCalwidget(CalWidget *parent):CalWidget(parent)
     Button* FacButton=CreatButton("fac",SLOT(FunctionClicked()));
     Button* IButton=CreatButton("i",SLOT(OrdinaryClicked()));
     Button* FractionButton=CreatButton("|",SLOT(OrdinaryClicked()));//attention,symbol!
-    Button* UpButton=CreatButton("↑",SLOT(UpClicked()));
-    Button* DownButton=CreatButton("↓",SLOT(DownClicked()));
+
     Button* RandButton=CreatButton("rand",SLOT(RandClicked()));
 
     QLabel* label=new QLabel("\t函数功能键区\t");
@@ -48,8 +48,6 @@ AdvancedCalwidget::AdvancedCalwidget(CalWidget *parent):CalWidget(parent)
     rlayout->addWidget(FacButton,5,1);
     rlayout->addWidget(IButton,5,2);
     rlayout->addWidget(FractionButton,5,3);
-    rlayout->addWidget(UpButton,1,0);
-    rlayout->addWidget(DownButton,2,0);
     rlayout->addWidget(RandButton,3,0);
     alayout=new QHBoxLayout;
     QFrame* line=new QFrame(this);
@@ -74,3 +72,55 @@ void AdvancedCalwidget::RandClicked()
     randmwindow->setAttribute(Qt::WA_DeleteOnClose,true);
     randmwindow->show();
 }
+
+void AdvancedCalwidget::formatButtonClicked()
+{
+    bool ok;
+    int t=qobject_cast<AdvancedMainwindow*>(this->parent())->formatEdit->text().toInt(&ok);
+    if(ok==true&&t<=15&&t>=0)
+    {
+        floatNumber=t;
+    }
+    else
+    {
+        qobject_cast<AdvancedMainwindow*>(this->parent())->formatEdit->setText(QString::number(floatNumber));
+        QMessageBox::information(this,"错误","输入数字错误！\n"
+                                           "请输入大于等于0小于等于15的整数！");
+    }
+}
+
+void AdvancedCalwidget::radBoxStatusChanged(int State)
+{
+    if(State==Qt::Checked)
+        expression.isRad=false;
+    else
+        expression.isRad=true;
+    QString t=this->display->text();
+    bool ok;
+    double tn=t.toDouble(&ok);
+    if(ok)
+    {
+        switch(expression.isRad)
+        {
+        case true:
+            formatOutput(formatState,tn/180*PAI);
+            break;
+        case false:
+            formatOutput(formatState,tn/PAI*180);
+            break;
+        }
+    }
+}
+
+/*void AdvancedCalwidget::isRoundChanged(int state)
+{
+    switch(state)
+    {
+    case Qt::Checked:
+        isRound=true;
+        break;
+    case Qt::Unchecked:
+        isRound=false;
+        break;
+    }
+}*/

@@ -4,10 +4,13 @@
 #include <QString>
 #include <stack>
 #include <queue>
-const int FuncNumber=15;
+const int FuncNumber=8+15;
+const double PAI=3.14159265358979323;
+//const double EPS=1e-15;
 using std::stack;
 const QString function[FuncNumber]=
 {
+    "","","","","","","","",
     "sin",
     "cos",
     "tan",
@@ -34,19 +37,22 @@ const int PRIORITY[7][7]=
     { 1, 1, 1, 1, 1, 1, 1},//^
     { 1, 1, 0, 0, 1,-1, 0} //%
 };
+//double myRound(double indata,int precision,double eps);
 class Expression
 {
 public:
-    Expression(QString s=""):expstring(s),legal(true),result(0){sc.push(4);}
+    Expression(QString s=""):expstring(s),legal(true),result(0),isRad(true){sc.push(4);}
     bool LegalAndCal();//judge the validity of the expression and calculate,but now the judgement hasn't been finished.
     double GetResult(){return result;}
     void SetExpression(QString s);
     void ResetExpresion(){expstring="";}
+    bool isRad;
 private:
     bool MyToDouble(const QString&);
     bool opcal(int currentop);
     double myBasicCal(double,double,int);//calculation of "+,-,*,/"
-    double FunCal(int b, int m, int e);//function calculation
+    int FunNum(int b, int m);
+    double FunCal(int funcnum, double x);//function calculation
     double mypop(stack<double>& s){double t=s.top();s.pop();return t;}//just an enhanced pop
     //bool ComPri(char a,char b);
     stack<double> sn;

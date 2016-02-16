@@ -10,6 +10,7 @@ class AdvancedMainwindow:public QMainWindow
 public:
     AdvancedMainwindow(QMainWindow* parent=0);
     ~AdvancedMainwindow(){}
+    QLineEdit* formatEdit;
 private slots:
     void backToBasicClicked();
     void doAbout();
@@ -17,14 +18,17 @@ private slots:
     void doStatistic();
 private:
     //QToolBar* mainTool;
+    QStatusBar* statusBar;
+    QCheckBox* formatCheckBox;
+    QPushButton* formatButton;
     QMenuBar* mbar;
-    QMenu* menuFormat;
+    //QMenu* menuFormat;
     QMenu* menuStatistic;
     QMenu* menuPolynome;
     QMenu* menuCustomFunction;
     QToolBar* mToolBar;
-    QAction* actDegOrRad;
-    QAction* actFloatDigit;
+    //QAction* actDegOrRad;
+    //QAction* actFloatDigit;
     QAction* actBackToBasic;
     QAction* inputExpressionMannual;
     QAction* actAbout;

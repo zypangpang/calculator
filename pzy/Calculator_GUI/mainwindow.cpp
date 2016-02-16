@@ -2,22 +2,43 @@
 
 Mainwindow::Mainwindow(QWidget* parent):QMainWindow(parent)
 {
-   cal=new CalWidget();
+   cal=new CalWidget(this);
    cal->mySetLayout();
    mainToolBar=new QToolBar(this);
    mainToolBar->setAllowedAreas(Qt::TopToolBarArea);
    advancedMode=mainToolBar->addAction("高级模式",this,SLOT(doAdvancedMode()));
-   inputExpressionMannual=mainToolBar->addAction("手动输入",cal,SLOT(doInputMannual()));
+   //inputExpressionMannual=mainToolBar->addAction("手动输入",cal,SLOT(doInputMannual()));
    actAbout=mainToolBar->addAction("关于",this,SLOT(doAbout()));
    actHelp=mainToolBar->addAction("帮助",this,SLOT(doHelp()));
    mainToolBar->setFloatable(false);
    mainToolBar->setMovable(false);
    addToolBar(Qt::TopToolBarArea,mainToolBar);
    setCentralWidget(cal);
-   QSize size=this->sizeHint();
-   setFixedSize(size);
+   /*QLabel* Space=new QLabel;
+   Space->setFixedSize(7,20);
+   formatCheckBox=new QCheckBox("科学计数法");
+   formatCheckBox->setTristate(true);
+   formatCheckBox->setFixedSize(90,20);
+   formatCheckBox->setCheckState(Qt::PartiallyChecked);
+   statusBar=new QStatusBar;
+   statusBar->addWidget(Space);
+   statusBar->addWidget(formatCheckBox);
+   statusBar->setSizeGripEnabled(false);
+   QLabel* formatLabel=new QLabel("有效/小数位数");
+   statusBar->addWidget(formatLabel);
+   formatEdit=new QLineEdit("6");
+   formatEdit->setFixedSize(54,20);
+   statusBar->addWidget(formatEdit);
+   formatButton=new QPushButton("确定");
+   formatButton->setFixedSize(40,20);
+   statusBar->addWidget(formatButton);
+   setStatusBar(statusBar);*/
+   setFixedSize(sizeHint());
    setWindowTitle("计算器");
    acal=new AdvancedMainwindow(this);
+
+   //connect(formatCheckBox,SIGNAL(stateChanged(int)),cal,SLOT(doFormatCheckBoxChanged(int)));
+   //connect(formatButton,SIGNAL(clicked()),cal,SLOT(formatButtonClicked()));
 }
 
 Mainwindow::~Mainwindow()
@@ -33,16 +54,10 @@ void Mainwindow::doAdvancedMode()
 
 void Mainwindow::doHelp()
 {
-    QMessageBox::information(this,"帮助","输入格式：\n1.函数名前要有一个空格\n"
-                                       "2.用{ }框起用于函数的表达式\n"
-                                       "3.不需要等号\n"
-                                       "4.正数前不能加'+'\n"
-                                       "5.仅支持界面所有的内置函数的计算，\n"
-                                       "   若要计算其它函数，请使用自定义函数\n"
-                                       "示例：\n1+ tan{(3+6)*5}");
+    QMessageBox::information(this,"帮助","1.支持的数的范围：大于-1e+16小于1e+16\n"
+                                       "2.默认有效数字位数为6");
+
 }
-
-
 void Mainwindow::doAbout()
 {
     QMessageBox::about(this,"关于","设计组成员：\n庞在余，杨云飞，王钰昭，赵瑞雪，杨威峰");
