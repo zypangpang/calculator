@@ -22,17 +22,24 @@ AdvancedCalwidget::AdvancedCalwidget(QWidget *parent):CalWidget(parent)
     Button* FacButton=CreatButton("fac",SLOT(FunctionClicked()));
     Button* IButton=CreatButton("i",SLOT(OrdinaryClicked()));
     Button* FractionButton=CreatButton("|",SLOT(OrdinaryClicked()));//attention,symbol!
-
+    Button* AnswerButton=CreatButton("Ans",SLOT(AnsClicked()));
     Button* RandButton=CreatButton("rand",SLOT(RandClicked()));
 
-    QLabel* label=new QLabel("\t函数功能键区\t");
-    QFont font=label->font();
-    font.setPointSize(font.pointSize()+2);
-    label->setFont(font);
-    label->setFrameShape(QFrame::StyledPanel);
+    //QLabel* label=new QLabel("\t函数功能键区\t");
+    //QFont font=label->font();
+    //font.setPointSize(font.pointSize()+2);
+    //label->setFont(font);
+    //label->setFrameShape(QFrame::StyledPanel);
+
+    resultDisplay=new QLineEdit("0");
+    QFont font = resultDisplay->font();
+    font.setPointSize(font.pointSize() + 8);
+    resultDisplay->setAlignment(Qt::AlignRight);
+    resultDisplay->setReadOnly(true);
+    resultDisplay->setFont(font);
 
     QGridLayout* rlayout=new QGridLayout;
-    rlayout->addWidget(label,0,0,1,4);
+    rlayout->addWidget(resultDisplay,0,0,1,4);
     rlayout->addWidget(SinButton,1,1);
     rlayout->addWidget(CosButton,1,2);
     rlayout->addWidget(TanButton,1,3);
@@ -42,6 +49,7 @@ AdvancedCalwidget::AdvancedCalwidget(QWidget *parent):CalWidget(parent)
     rlayout->addWidget(ExpButton,3,1);
     rlayout->addWidget(Log10Button,3,2);
     rlayout->addWidget(Log2Button,3,3);
+    rlayout->addWidget(AnswerButton,5,0);
     rlayout->addWidget(CeilButton,4,1);
     rlayout->addWidget(FloorButton,4,2);
     rlayout->addWidget(AbsButton,4,3);
@@ -63,6 +71,13 @@ AdvancedCalwidget::AdvancedCalwidget(QWidget *parent):CalWidget(parent)
 
 void AdvancedCalwidget::mySetLayout()
 {
+
+    display->setReadOnly(true);
+    display->setAlignment(Qt::AlignRight);
+    display->setFixedSize(286,30);
+    QFont font = display->font();
+    font.setPointSize(font.pointSize() + 4);
+    display->setFont(font);
     setLayout(alayout);
 }
 
@@ -109,6 +124,67 @@ void AdvancedCalwidget::radBoxStatusChanged(int State)
             formatOutput(formatState,tn/PAI*180);
             break;
         }
+    }
+}
+
+void AdvancedCalwidget::CAllClicked()
+{
+    display->setText("0");
+    resultDisplay->setText("0");
+    EqualState=false;
+}
+
+void AdvancedCalwidget::AnsClicked()
+{
+    if(display->text()=="0"||EqualState)
+    {
+        display->setText(resultDisplay->text());
+        EqualState=false;
+    }
+    else
+    {
+        display->setText(display->text()+resultDisplay->text());
+    }
+}
+
+void AdvancedCalwidget::formatOutput(int state, double n)
+{
+    switch(state)
+    {
+    case FORMAT_FLOAT:
+        resultDisplay->setText(QString::number(n,'f',floatNumber));
+        break;
+    case FORMAT_SCIENCE:
+        resultDisplay->setText(QString::number(n,'e',floatNumber));
+        break;
+    case FORMAT_MIXED:
+        resultDisplay->setText(QString::number(n,'g',floatNumber));
+        break;
+    }
+}
+void AdvancedCalwidget::doInputMannual()
+{
+    EqualState=true;
+    bool ok;
+    QString text=QInputDialog::getText(this,tr("手动输入"),tr("表达式（格式请查看“帮助”）"),QLineEdit::Normal,tr("例:-1+ sin( sqrt(2)+1)"),&ok);
+    if(ok&&!text.isEmpty())
+    {
+    expression.SetExpression(text);
+    if(expression.LegalAndCal())
+    {
+        double tresult=expression.GetResult();
+        if(tresult!=tresult||tresult+1==tresult)
+            display->setText("表达式错误或数值溢出！");
+        else
+        {
+            display->setText(text);
+            formatOutput(formatState,expression.GetResult());
+        }
+    }
+    else
+    {
+        display->setText("表达式错误或数值溢出！");
+    }
     }
 }
 

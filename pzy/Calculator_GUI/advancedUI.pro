@@ -25,3 +25,6 @@ SOURCES += main.cpp \
 FORMS    += STMainWindow.ui \
     randomwidget.ui
 
+RESOURCES += \
+    icon.qrc
+

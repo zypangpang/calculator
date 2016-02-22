@@ -16,12 +16,18 @@ private slots:
     void RandClicked();
     void formatButtonClicked();
     void radBoxStatusChanged(int);
+    void CAllClicked();
+    void AnsClicked();
+    void doInputMannual();
     //void isRoundChanged(int);
 private:
     QHBoxLayout* alayout;
     bool isVirtualCal;
     bool isFractionCal;
     int floatFormat;
+    QLineEdit* resultDisplay;
+
+    void formatOutput(int state,double n);
 };
 
 #endif // ADVANCED_CALWIDGET

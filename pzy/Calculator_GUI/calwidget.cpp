@@ -7,14 +7,10 @@ CalWidget::CalWidget(QWidget *parent):QWidget(parent)
     floatNumber=6;
     //isRound=false;
     formatState=FORMAT_MIXED;
-    //EqualState=false;
+    EqualState=false;
     display=new QLineEdit("0");
-    display->setReadOnly(true);
-    display->setAlignment(Qt::AlignRight);
     //display->setMaxLength(15);
-    QFont font = display->font();
-    font.setPointSize(font.pointSize() + 8);
-    display->setFont(font);
+
     Button* BspaceButton=CreatButton(tr("退格"),SLOT(BspaceClicked()));
     Button* ClearButton=CreatButton(tr("清除"),SLOT(ClearClicked()));
     Button* CAllButton=CreatButton(tr("清除全部"),SLOT(CAllClicked()));
@@ -128,6 +124,11 @@ void CalWidget::formatOutput(int state, double n)
 
 void CalWidget::mySetLayout()
 {
+    display->setReadOnly(true);
+    display->setAlignment(Qt::AlignRight);
+    QFont font = display->font();
+    font.setPointSize(font.pointSize() + 8);
+    display->setFont(font);
     setLayout(layout);
 }
 /*CalWidget::~CalWidget()
@@ -138,10 +139,10 @@ void CalWidget::mySetLayout()
 void CalWidget::OrdinaryClicked()
 {
     Button* t=qobject_cast<Button*>(sender());
-    if(display->text()=="0")
+    if(display->text()=="0"||EqualState)
     {
         display->setText(t->text());
-
+        EqualState=false;
     }
     else
     {
@@ -152,10 +153,10 @@ void CalWidget::OrdinaryClicked()
 void CalWidget::FunctionClicked()
 {
     Button* t=qobject_cast<Button*>(sender());
-    if(display->text()=="0")
+    if(display->text()=="0"||EqualState)
     {
         display->setText(" "+t->text()+"(");
-
+        EqualState=false;
     }
     else
     {
@@ -176,13 +177,21 @@ void CalWidget::BspaceClicked()
 void CalWidget::ClearClicked()
 {
     display->setText("0");
+    EqualState=false;
+}
+
+void CalWidget::CAllClicked()
+{
+    display->setText("0");
+    EqualState=false;
 }
 
 void CalWidget::PaiClicked()
 {
-    if(display->text()=="0")
+    if(display->text()=="0"||EqualState)
     {
         display->setText(QString::number(PAI,'f',17));
+        EqualState=false;
 
     }
     else
@@ -193,6 +202,7 @@ void CalWidget::PaiClicked()
 
 void CalWidget::EqualClicked()
 {
+    EqualState=true;
     QString t=display->text();
     if(t[0].isNumber()||t[0]=='('||t[0]==' '||t[0]=='-'||t[0]=='.')
     {
@@ -220,30 +230,18 @@ void CalWidget::EqualClicked()
 
 void CalWidget::PointClicked()
 {
-    display->setText(display->text()+".");
-}
-
-void CalWidget::doInputMannual()
-{
-    bool ok;
-    QString text=QInputDialog::getText(this,tr("手动输入"),tr("表达式："),QLineEdit::Normal,tr("例:-1+ sin( sqrt(2)+1)"),&ok);
-    if(ok&&!text.isEmpty())
+    if(EqualState)
     {
-    expression.SetExpression(text);
-    if(expression.LegalAndCal())
-    {
-        double tresult=expression.GetResult();
-        if(tresult!=tresult||tresult+1==tresult)
-            display->setText("表达式错误或数值溢出！");
-        else
-            formatOutput(formatState,expression.GetResult());
+        display->setText("0.");
+        EqualState=false;
     }
     else
     {
-        display->setText("表达式错误或数值溢出！");
-    }
+        display->setText(display->text()+".");
     }
 }
+
+
 
 void CalWidget::doFormatCheckBoxChanged(int State)
 {

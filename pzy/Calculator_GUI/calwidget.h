@@ -30,12 +30,11 @@ private slots:
     void FunctionClicked();
     void BspaceClicked();
     void ClearClicked();
-    //void CAllClicked();
+    virtual void CAllClicked();
     void PaiClicked();
     //void PowerClicked();
     void EqualClicked();
     void PointClicked();
-    void doInputMannual();
     void doFormatCheckBoxChanged(int State);
     //void NegtiveClicked();
     //void upClicked();
@@ -47,11 +46,11 @@ protected:
     Button* CreatButton(const QString& text, const char* slot);
     int floatNumber;
     QLineEdit* display;
-    void formatOutput(int state,double n);
+    virtual void formatOutput(int state,double n);
     Button* DigitButton[10];
     Expression expression;
     FORMAT formatState;
-    //bool EqualState;
+    bool EqualState;
    // QString exprs;
 
 };
