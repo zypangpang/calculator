@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2016-02-10T22:28:22
+# Project created by QtCreator 2016-02-17T19:45:55
 #
 #-------------------------------------------------
 
@@ -8,15 +8,16 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = SelfDFunc
+TARGET = CustomFunction
 TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        sdf_dialog.cpp \
-    expressionfunc.cpp
+        cfuncmainwindow.cpp \
+    expressionfunc.cpp \
+    cfuncwidget.cpp
 
-HEADERS  += sdf_dialog.h \
+HEADERS  += cfuncmainwindow.h \
     expression.h
 
-FORMS    += sdf_dialog.ui
+FORMS    += cfuncmainwindow.ui
