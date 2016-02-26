@@ -9,7 +9,8 @@ HEADERS += calwidget.h \
     st_mainwindow.h \
     statistics.h \
     randomwidget.h \
-    randmainwindow.h
+    randmainwindow.h \
+    memory.h
 
 
 SOURCES += main.cpp \
@@ -21,7 +22,9 @@ SOURCES += main.cpp \
     mainwindow.cpp \
     st_mainwindow.cpp \
     statistics.cpp \
-    randomwidget.cpp
+    randomwidget.cpp \
+    memory.cpp
+
 FORMS    += STMainWindow.ui \
     randomwidget.ui
 

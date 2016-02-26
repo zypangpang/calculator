@@ -2,12 +2,13 @@
 #include "calwidget.h"
 #include "button.h"
 #include "mainwindow.h"
+//#include "memory.h"
 CalWidget::CalWidget(QWidget *parent):QWidget(parent)
 {
     floatNumber=6;
     //isRound=false;
     formatState=FORMAT_MIXED;
-    EqualState=false;
+    EqualState=true;
     display=new QLineEdit("0");
     //display->setMaxLength(15);
 
@@ -177,13 +178,14 @@ void CalWidget::BspaceClicked()
 void CalWidget::ClearClicked()
 {
     display->setText("0");
-    EqualState=false;
+    EqualState=true;
 }
 
 void CalWidget::CAllClicked()
 {
     display->setText("0");
-    EqualState=false;
+    EqualState=true;
+    memory.clear();
 }
 
 void CalWidget::PaiClicked()
@@ -202,13 +204,16 @@ void CalWidget::PaiClicked()
 
 void CalWidget::EqualClicked()
 {
-    EqualState=true;
+    if(EqualState)
+        return;
     QString t=display->text();
+    EqualState=true;
     if(t[0].isNumber()||t[0]=='('||t[0]==' '||t[0]=='-'||t[0]=='.')
     {
     expression.SetExpression(display->text());
     if(expression.LegalAndCal())
     {
+        memory.input(t);
         double tresult=expression.GetResult();
         if(tresult!=tresult||tresult+1==tresult)
             display->setText("表达式错误或数值溢出！");
@@ -258,6 +263,16 @@ void CalWidget::doFormatCheckBoxChanged(int State)
     {
         formatOutput(formatState,tn);
     }
+}
+
+void CalWidget::upClicked()
+{
+    display->setText(memory.up());
+}
+
+void CalWidget::downClicked()
+{
+    display->setText(memory.down());
 }
 
 /*void CalWidget::NegtiveClicked()

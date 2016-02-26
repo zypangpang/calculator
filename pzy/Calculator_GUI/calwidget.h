@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include "expression.h"
-
+#include "memory.h"
 
 enum FORMAT
 {
@@ -16,6 +16,7 @@ class QLineEdit;
 class QToolButton;
 class Button;
 class QGridLayout;
+
 
 class CalWidget:public QWidget
 {
@@ -37,8 +38,8 @@ private slots:
     void PointClicked();
     void doFormatCheckBoxChanged(int State);
     //void NegtiveClicked();
-    //void upClicked();
-    //void downClicked();
+    void upClicked();
+    void downClicked();
     virtual void formatButtonClicked();
 protected:
     //bool isRound;
@@ -51,6 +52,7 @@ protected:
     Expression expression;
     FORMAT formatState;
     bool EqualState;
+    Memory memory;
    // QString exprs;
 
 };

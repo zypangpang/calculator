@@ -131,7 +131,8 @@ void AdvancedCalwidget::CAllClicked()
 {
     display->setText("0");
     resultDisplay->setText("0");
-    EqualState=false;
+    EqualState=true;
+    memory.clear();
 }
 
 void AdvancedCalwidget::AnsClicked()
