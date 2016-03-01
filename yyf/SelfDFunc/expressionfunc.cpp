@@ -316,6 +316,9 @@ double Expression::FunCal(int funcnum, double x)
          default:
              return false;
          }
+
+
+
      }
      while(sc.size()>1)
      {
@@ -424,8 +427,4 @@ double Expression::FunCal(int funcnum, double x)
  //and the subtraction operator are integrated. Now you can use subtraction
  //operator to represent the negative operator.
  /**************************************************************************/
-
-
-
-
 
