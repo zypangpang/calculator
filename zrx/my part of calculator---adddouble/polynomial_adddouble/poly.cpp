@@ -29,8 +29,8 @@ void Poly:: AddPoly()
     Poly * t=t0->next;    //对this指针进行 操作
 
     if(t==NULL) {this->next=t; t0->next=this;}
-    int e=this->exp;
-    int temp;
+    double e=this->exp;
+    double temp;
     while(t!=NULL)
     {
         if(e>t->exp){t=t->next;t0=t0->next;}
@@ -57,7 +57,7 @@ QString Poly ::toString(){      //将当前多项式转换成QString类型
     QString temp;
     Poly * t=(Poly::head)->next;
     if(t==NULL) return str="0";
-    int num;
+    double num;
     while(t!=NULL)
     {
         num=t->coef;
@@ -66,8 +66,8 @@ QString Poly ::toString(){      //将当前多项式转换成QString类型
             str=str.append('-');
             num=-num;
         }
-        else str=str.append('+');
-        temp=IntToString(num);
+        else {str=str.append('+');}
+        temp=QString::number(num,'g',6);
         str=str.append(temp);
         num=t->exp;
         if(num==0) {t=t->next;}
@@ -75,8 +75,16 @@ QString Poly ::toString(){      //将当前多项式转换成QString类型
         {
             str=str.append('x');
             str=str.append('^');
-            temp=IntToString(num);
-            str=str.append(temp);
+            if(num<0)
+            {
+                str=str.append('(');
+                temp=QString::number(num,'g',6);
+                str=str.append(temp);
+                str=str.append(')');
+            }
+            else
+            {temp=QString::number(num,'g',6);
+            str=str.append(temp);}
             t=t->next;
         }
     }
@@ -87,29 +95,38 @@ QString Poly:: Diff()            //求导数(静态成员函数)
 {
     QString str,temp;
     Poly * t=(Poly::head)->next;
-    int numcoef,numexp,num;
+    double numcoef,numexp,num;
     if(t->exp==0) t=t->next;
     while(t!=NULL)
     {
       numcoef=(t->coef)*(t->exp);
       numexp=t->exp-1;
+      if(numexp==-1) {t=t->next;continue;}
       if(numcoef<0)
       {
           str=str.append('-');
           numcoef=-numcoef;
       }
       else str=str.append('+');
-      temp=IntToString(numcoef);
+      temp=QString::number(numcoef,'g',6);
       str=str.append(temp);        //!!!problem
 
-      if(num==0) t=t->next;
+      if(numexp==0) t=t->next;
       else
       {
           str=str.append('x');
           str=str.append('^');
 
-          temp=IntToString(numexp);
-          str=str.append(temp);
+          if(numexp<0)
+          {
+              str=str.append('(');
+              temp=QString::number(numexp,'g',6);
+              str=str.append(temp);
+              str=str.append(')');
+          }
+          else
+          {temp=QString::number(numexp,'g',6);
+          str=str.append(temp);}
           t=t->next;
       }
 
@@ -117,14 +134,6 @@ QString Poly:: Diff()            //求导数(静态成员函数)
     return str;
 }
 
-/*
-QString statistics ::toString(int num){
-    ostringstream oss;
-        oss<<num;
-        string s;
-       s=oss.str();
-       return QString(QString::fromLocal8Bit(s.c_str()));
-}*/
 
 
 

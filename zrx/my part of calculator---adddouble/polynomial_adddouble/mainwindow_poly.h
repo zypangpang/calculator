@@ -7,19 +7,19 @@
 #include<QtWidgets>
 
 namespace Ui {
-class MainWindow;
+class MainWindowPoly;
 }
 
-class MainWindow : public QMainWindow
+class MainWindowPoly : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+    explicit MainWindowPoly(QWidget *parent = 0);
+    ~MainWindowPoly();
 
 private:
-    Ui::MainWindow *ui;
+    Ui::MainWindowPoly *ui;
     QToolBar* mainToolBar;
     QAction* advancedMode;
     QAction* inputData;
@@ -69,6 +69,7 @@ private slots:
 
     void on_button_erasecoef_2_clicked();
     void on_pushButton_clicked();
+    void on_button_pos_clicked();
 };
 
 #endif // MAINWINDOW_H

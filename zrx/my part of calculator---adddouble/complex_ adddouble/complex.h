@@ -9,16 +9,16 @@
 class Complex
 {
 public:
-    Complex(int r,int v):real(r),virtul(v){}
+    Complex(double r,double v):real(r),virtul(v){}
     ~Complex(){}
     Complex Add(Complex);
     Complex& Multi(Complex);
-    QString Div(Complex);
+    Complex Div(Complex);
     double Model();
     static QString ComplexToString(Complex);
 
-    int real;     //实数
-    int virtul;      //虚数
+    double real;     //实数
+    double virtul;      //虚数
 };
 
 #endif // COMPLEX_H

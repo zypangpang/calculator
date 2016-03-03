@@ -1,25 +1,25 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef MAINWINDOWC_H
+#define MAINWINDOWC_H
 
 
 #include<QMainWindow>
-#include<QApplication>
-#include<QWidget>
 #include<QtWidgets>
 
+#include<QApplication>
+#include<QWidget>
 namespace Ui {
-class MainWindow;
+class MainWindowComplex;
 }
 
-class MainWindow : public QMainWindow
+class MainWindowComplex : public QMainWindow
 {
     Q_OBJECT
 public:
-    explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+    explicit MainWindowComplex(QWidget *parent = 0);
+    ~MainWindowComplex();
 
 private:
-    Ui::MainWindow *ui;
+    Ui::MainWindowComplex *ui;
     QToolBar* mainToolBar;
     QAction* advancedMode;
     QAction* inputData;
@@ -73,6 +73,7 @@ private slots:
     void doHelp();
 
     void doAbout();
+    void on_Button0_2_clicked();
 };
 
-#endif // MAINWINDOW_H
+#endif // MAINWINDOWC_H

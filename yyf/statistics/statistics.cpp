@@ -15,7 +15,7 @@ void statistics ::AddData(double data){   //添加数据
 void statistics ::Erase(){               //清除上一个数据
     sta.pop_back();
 }
-QString statistics ::toString(double num){               //清除上一个数据
+QString statistics ::toString(double num){    //清除上一个数据
     ostringstream oss;
         oss<<num;
         string s;
@@ -25,7 +25,6 @@ QString statistics ::toString(double num){               //清除上一个数据
 QString statistics ::Sort(){
     sort(sta.begin(),sta.end(),less1);
     return  renew();
-
 }
 QString statistics ::rSort(){
     sort(sta.begin(),sta.end(),less2);
@@ -110,3 +109,5 @@ QString statistics ::renew(){
 void statistics ::empty(){
     sta.clear();
 }
+
+
