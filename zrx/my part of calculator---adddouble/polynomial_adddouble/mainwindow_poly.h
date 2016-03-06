@@ -70,6 +70,7 @@ private slots:
     void on_button_erasecoef_2_clicked();
     void on_pushButton_clicked();
     void on_button_pos_clicked();
+
 };
 
 #endif // MAINWINDOW_H
