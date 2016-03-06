@@ -51,6 +51,10 @@ private slots:
     void on_button_twoSixteen_clicked();
 
 
+    void on_button_clicked();
+    void on_button_eightTwo_clicked();
+    void on_button_eightTen_clicked();
+    void on_button_eightSixteen_clicked();
 };
 
 

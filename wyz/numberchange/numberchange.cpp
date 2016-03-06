@@ -117,6 +117,44 @@ int  numberchange::twoEight(int n){
     string m=tenSixteen(t);
     return m;
 }
+
+ //八进制转十进制
+ int  numberchange:: eightTen(int n){
+     int m=0;
+     int i=0;
+     while(n!=0){
+         if(n%10<=7){
+          m=m+(n%10)*pow(8,i);
+         n=n/10;
+         i++;
+         }
+         else return -1;
+     }
+
+      return m;
+ }
+ //八进制转十六进制
+ string  numberchange::eightSixteen(int n){
+      int t=eightTen(n);
+      string x="error";
+      if(t==-1){
+          return x;
+         }
+      string m=tenSixteen(t);
+         return m;
+     }
+ //八进制转二进制
+ string numberchange::eightTwo(int n){
+     int t=eightTen(n);
+     string x="error";
+     if (t==-1){
+         return x;
+     }
+     string m=tenTwo(t);
+      return m;
+     }
+
+
 void numberchange::cleanStr(){
     str=' ';
 }

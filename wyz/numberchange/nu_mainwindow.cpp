@@ -35,76 +35,76 @@ NUMainWindow::~NUMainWindow()
 }
 numberchange s;
 
-QString temp;
-QString display;
+QString tem;
+QString disp;
 void NUMainWindow::on_button1_clicked()
 {
 
-    display=display.append('1');
-    ui->lineEdit->setText(display);
+    disp=disp.append('1');
+    ui->label->setText(disp);
 }
 
 void NUMainWindow::on_button2_clicked()
 {
 
-    display=display.append('2');
-    ui->lineEdit->setText(display);
+    disp=disp.append('2');
+    ui->label->setText(disp);
 }
 
 void NUMainWindow::on_button3_clicked()
 {
 
-    display=display.append('3');
-    ui->lineEdit->setText(display);
+    disp=disp.append('3');
+    ui->label->setText(disp);
 }
 
 void NUMainWindow::on_button0_clicked()
 {
 
-    display=display.append('0');
-    ui->lineEdit->setText(display);
+    disp=disp.append('0');
+    ui->label->setText(disp);
 }
 
 
 void NUMainWindow::on_button4_clicked()
 {
 
-    display=display.append('4');
-    ui->lineEdit->setText(display);
+    disp=disp.append('4');
+    ui->label->setText(disp);
 }
 
 void NUMainWindow::on_button5_clicked()
 {
 
-    display=display.append('5');
-    ui->lineEdit->setText(display);
+    disp=disp.append('5');
+    ui->label->setText(disp);
 }
 
 
 void NUMainWindow::on_button6_clicked()
 {
 
-    display=display.append('6');
-    ui->lineEdit->setText(display);
+    disp=disp.append('6');
+    ui->label->setText(disp);
 }
 
 void NUMainWindow::on_button7_clicked()
 {
 
-    display=display.append('7');
-    ui->lineEdit->setText(display);
+    disp=disp.append('7');
+    ui->label->setText(disp);
 }
 
 void NUMainWindow::on_button8_clicked()
 {
 
-    display=display.append('8');
-    ui->lineEdit->setText(display);
+    disp=disp.append('8');
+    ui->label->setText(disp);
 }
 void NUMainWindow::on_button9_clicked()
 {
-    display=display.append('9');
-    ui->lineEdit->setText(display);
+    disp=disp.append('9');
+    ui->label->setText(disp);
 }
 
 
@@ -113,10 +113,10 @@ void NUMainWindow::on_button9_clicked()
 
 void NUMainWindow::on_button_erase_clicked()
 {
-     display.clear();
-     display.isEmpty();
+     disp.clear();
+     disp.isEmpty();
      s.cleanStr();
-       ui->lineEdit->setText("0");
+       ui->label->setText("0");
 
 }
 
@@ -124,11 +124,11 @@ void NUMainWindow::on_button_erase_clicked()
 void NUMainWindow::on_button_tenTwo_clicked()
 {
 
-    QString t=ui->lineEdit->text();
-   int n=display.toInt();
+    QString t=ui->label->text();
+   int n=disp.toInt();
    string x=s.tenTwo(n);
    s.cleanStr();
-  ui->lineEdit->setText(QString::fromStdString(x));
+  ui->label->setText(QString::fromStdString(x));
 
 
 }
@@ -138,11 +138,11 @@ void NUMainWindow::on_button_tenTwo_clicked()
 void NUMainWindow::on_button_tenEight_clicked()
 {
 
-   QString t=ui->lineEdit->text();
+   QString t=ui->label->text();
    int n=t.toInt();
    string x=s.tenEight(n);
    s.cleanStr();
-    ui->lineEdit->setText(QString::fromStdString(x));
+    ui->label->setText(QString::fromStdString(x));
 
 
 }
@@ -150,44 +150,77 @@ void NUMainWindow::on_button_tenEight_clicked()
 
 void NUMainWindow::on_button_tenSixteen_clicked()
 {
-    QString t=ui->lineEdit->text();
+    QString t=ui->label->text();
     int n=t.toInt();
     string x=s.tenSixteen(n);
     s.cleanStr();
-    ui->lineEdit->setText(QString::fromStdString(x));
+    ui->label->setText(QString::fromStdString(x));
 
 
 }
 
 void NUMainWindow::on_button_twoTen_clicked()
 {
-    QString t=ui->lineEdit->text();
+    QString t=ui->label->text();
     int n=t.toInt();
     int x=s.twoTen(n);
     s.cleanStr();
-    if(x==-1){ui->lineEdit->setText("Your input is malformed!");}
-    else ui->lineEdit->setText(QString::number(x));
+    if(x==-1){ui->label->setText("Your input is malformed!");}
+    else ui->label->setText(QString::number(x));
 }
 
 
 void NUMainWindow::on_button_twoEight_clicked()
 {
-    QString t=ui->lineEdit->text();
+    QString t=ui->label->text();
     int n=t.toInt();
    int x=s.twoEight(n);
    s.cleanStr();
-   if(x==-1){ui->lineEdit->setText("Your input is malformed!");}
-   else ui->lineEdit->setText(QString::number(x));
+   if(x==-1){ui->label->setText("Your input is malformed!");}
+   else ui->label->setText(QString::number(x));
 }
 
 void NUMainWindow::on_button_twoSixteen_clicked()
 {
-    QString t=ui->lineEdit->text();
+    QString t=ui->label->text();
     int n=t.toInt();
     string x=s.twoSixteen(n);
     s.cleanStr();
-    if(x=="error"){ui->lineEdit->setText("Your input is malformed!");}
-    else ui->lineEdit->setText(QString::fromStdString(x));
+    if(x=="error"){ui->label->setText("Your input is malformed!");}
+    else ui->label->setText(QString::fromStdString(x));
 
 }
 
+
+
+
+void NUMainWindow::on_button_eightTwo_clicked()
+{
+    QString t=ui->label->text();
+    int n=t.toInt();
+    string x=s.eightTwo(n);
+    s.cleanStr();
+    if(x=="error"){ui->label->setText("Your input is malformed!");}
+    else ui->label->setText(QString::fromStdString(x));
+}
+
+void NUMainWindow::on_button_eightTen_clicked()
+{
+    QString t=ui->label->text();
+    int n=t.toInt();
+   int x=s.eightTen(n);
+   s.cleanStr();
+   if(x==-1){ui->label->setText("Your input is malformed!");}
+   else ui->label->setText(QString::number(x));
+}
+
+void NUMainWindow::on_button_eightSixteen_clicked()
+{
+    QString t=ui->label->text();
+    int n=t.toInt();
+    string x=s.eightSixteen(n);
+    s.cleanStr();
+    if(x=="error"){ui->label->setText("Your input is malformed!");}
+    else ui->label->setText(QString::fromStdString(x));
+
+}
