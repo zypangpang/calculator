@@ -37,8 +37,8 @@ MainWindowComplex::~MainWindowComplex()
 
 char sign='^'; //存储符号字符串类型
 QString temp="";
-QString tempreal;
-QString tempvirtual;
+QString tempreal="";
+QString tempvirtual="";
 Complex tempc(0,0);    //tempc 始终保持当前运输结果
 
 void MainWindowComplex::on_Button1_clicked()
@@ -118,6 +118,7 @@ void MainWindowComplex::on_Button_neg_clicked()
 
 void MainWindowComplex::on_Button_point_clicked()   //实际上是求模 model  点求模按键就直接出结果(还没有写完) 求完模后不进行其余操作
 {
+    if(tempc.real==0 && tempc.virtul==0) return;
 
     double numreal=tempreal.toDouble();
     double numvirtual=tempvirtual.toDouble();
@@ -147,7 +148,7 @@ void MainWindowComplex::on_Button_multi_clicked()    //乘法运算
 {
     bool ok;
 //  ui->answer->setText(tempreal);
-
+    if(tempc.real==0 && tempc.virtul==0) return;
     double numreal=tempreal.toDouble(&ok);
     double numvirtual=tempvirtual.toDouble(&ok);
     if(numreal!=0 || numvirtual!=0)
@@ -162,6 +163,7 @@ void MainWindowComplex::on_Button_multi_clicked()    //乘法运算
 
 void MainWindowComplex::on_Button_div_clicked()
 {
+    if(tempc.real==0 && tempc.virtul==0) return;
     double numreal=tempreal.toDouble();
     double numvirtual=tempvirtual.toDouble();
     if(numreal!=0 || numvirtual!=0)
@@ -201,12 +203,15 @@ void MainWindowComplex::on_erase_answer_clicked()   //将本次所有操作清�
 void MainWindowComplex::on_erase_real_clicked()
 {
     temp="";
+    tempreal="";
+    tempreal=tempreal.append('0');
     ui->input_real->setText(temp);  //将页面清空
 }
 
 void MainWindowComplex::on_erase_virtual_clicked()
 {
     temp="";
+    tempvirtual=tempvirtual.append('0');
     ui->input_virtual->setText(temp);  //将页面清空
 }
 

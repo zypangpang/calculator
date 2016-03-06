@@ -98,12 +98,16 @@ void MainWindowPoly::on_button_pos_clicked()
 void MainWindowPoly::on_button_erasecoef_clicked()
 {
     ptem="";
+    tempcoef="";
+    tempcoef=tempcoef.append('0');
     ui->inputcoef->setText(ptem);  //将页面清空
 }
 
 void MainWindowPoly::on_button_eraseexp_clicked()
 {
     ptem="";
+    tempexp="";
+    tempexp=tempexp.append('0');
     ui->inputexp->setText(ptem);   //将页面清空
 }
 

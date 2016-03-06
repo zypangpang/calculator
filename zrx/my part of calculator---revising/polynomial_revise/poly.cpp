@@ -1,26 +1,6 @@
 #include<poly.h>
 #include<cmath>
 #include<cstring>
-QString IntToString(int n)
-{
-   int k=0,i=0;
-   char ch[100];
-   QString s;
-   while(n!=0)
-   {
-       k=n%10;      //先得到个位数
-       ch[i]='0'+k;
-       i++;
-       n=n/10;
-   }
-
-   for(int j=i-1;j>=0;j--)
-   {
-       s=s.append(ch[j]);
-   }
-   return s;
-}
-
 Poly * Poly::head=new Poly(0,0);  //类外定义head变量(不能写在头文件中)
 
 void Poly:: AddPoly()
@@ -96,7 +76,7 @@ QString Poly:: Diff()            //求导数(静态成员函数)
     QString str,temp;
     Poly * t=(Poly::head)->next;
     double numcoef,numexp,num;
-    if(t->exp==0) t=t->next;
+    if(t!=NULL && t->exp==0) t=t->next;
     while(t!=NULL)
     {
       numcoef=(t->coef)*(t->exp);
@@ -131,6 +111,7 @@ QString Poly:: Diff()            //求导数(静态成员函数)
       }
 
     }
+    if(str=="") str=str.append('0');  //特殊情况进行讨论
     return str;
 }
 
