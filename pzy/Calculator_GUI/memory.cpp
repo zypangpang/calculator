@@ -1,56 +1,62 @@
 
 #include "memory.h"
 
-
 Memory::Memory()
 {
     guide=-1;
 }
 
-
-void Memory::input(QString str)
-{
-    guide=mem.size();
-
-    mem.append(str);
-
-
-}
-
-QString Memory::up()
-{
-    if(guide==-1)
-        return "0";
-    if(guide-1>=0)
-        --guide;
-    return mem[guide];
-
-}
-
-QString Memory::down()
-{
-    if(guide==-1)
-        return "0";
-   // QString error;
-    if(guide+1<mem.size())
-        ++guide;
-    if(guide<0)
-    {
-        guide=0;
-    }
-    return mem[guide];
-    /*if(mem.size()>guide){
-        return mem[guide];
-    }
-    else{
-        error="已无表达式！";
-        return error;
-    }*/
-
-
-}
 void Memory::clear()
 {
-    mem.clear();
+    expr.clear();
+    resu.clear();
     guide=-1;
 }
+
+void Memory::input(QString expression, double result)
+{
+    guide=expr.size();
+    expr.append(expression);
+    resu.append(result);
+}
+
+void Memory::up(QString &expression, double &result)
+{
+    if(guide==-1){
+        expression="0";
+        result=0;
+        return;
+    }
+    --guide;
+    if(guide>=0){
+       expression=expr[guide];
+       result=resu[guide];
+    }
+    else{
+        expression="0";
+        result=0;
+    }
+
+
+}
+
+void Memory::down(QString &expression, double &result)
+{
+    if(guide==expr.size()){
+        expression="0";
+        result=0;
+        return;
+    }
+    ++guide;
+    if(guide<expr.size()){
+        expression=expr[guide];
+        result=resu[guide];
+    }
+    else{
+        expression="0";
+        result=0;
+    }
+
+
+}
+

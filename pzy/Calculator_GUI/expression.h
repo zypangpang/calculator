@@ -41,8 +41,8 @@ const int PRIORITY[7][7]=
 class Expression
 {
 public:
-    Expression(QString s=""):expstring(s),legal(true),result(0),isRad(true){sc.push(4);}
-    bool LegalAndCal();//judge the validity of the expression and calculate,but now the judgement hasn't been finished.
+    Expression(QString s=""):expstring(s),result(0),isRad(true){sc.push(4);}
+    bool LegalAndCal();//judge the validity of the expression and calculate.
     double GetResult(){return result;}
     void SetExpression(QString s);
     void ResetExpresion(){expstring="";}
@@ -58,7 +58,7 @@ private:
     stack<double> sn;
     stack<int> sc;
     QString expstring;//QString is similar to string.
-    bool legal;
+    //bool legal;
     double result;
 
 };

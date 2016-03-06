@@ -156,12 +156,12 @@ void CalWidget::FunctionClicked()
     Button* t=qobject_cast<Button*>(sender());
     if(display->text()=="0"||EqualState)
     {
-        display->setText(" "+t->text()+"(");
+        display->setText(t->text()+"(");
         EqualState=false;
     }
     else
     {
-        display->setText(display->text()+" "+t->text()+"(");
+        display->setText(display->text()+t->text()+"(");
     }
 }
 
@@ -208,17 +208,19 @@ void CalWidget::EqualClicked()
         return;
     QString t=display->text();
     EqualState=true;
-    if(t[0].isNumber()||t[0]=='('||t[0]==' '||t[0]=='-'||t[0]=='.')
-    {
+    //if(t[0].isNumber()||t[0]=='('||t[0]==' '||t[0]=='-'||t[0]=='.')
+   // {
     expression.SetExpression(display->text());
     if(expression.LegalAndCal())
     {
-        memory.input(t);
         double tresult=expression.GetResult();
         if(tresult!=tresult||tresult+1==tresult)
             display->setText("表达式错误或数值溢出！");
         else
+        {
+            memory.input(t,tresult);
             formatOutput(formatState,expression.GetResult());
+        }
         //display->setText(QString::number(expression.GetResult(),'e',floatNumber));
 
     }
@@ -226,11 +228,11 @@ void CalWidget::EqualClicked()
     {
         display->setText("表达式错误或数值溢出！");
     }
-    }
-    else
-    {
-        display->setText("表达式错误或数值溢出！");
-    }
+    //}
+    //else
+    //{
+    //    display->setText("表达式错误或数值溢出！");
+    //}
 }
 
 void CalWidget::PointClicked()
@@ -248,31 +250,24 @@ void CalWidget::PointClicked()
 
 
 
-void CalWidget::doFormatCheckBoxChanged(int State)
-{
-    if(State==Qt::Checked)
-        formatState=FORMAT_SCIENCE;
-    else if(State==Qt::Unchecked)
-        formatState=FORMAT_FLOAT;
-    else
-        formatState=FORMAT_MIXED;
-    QString t=display->text();
-    bool ok;
-    double tn=t.toDouble(&ok);
-    if(ok)
-    {
-        formatOutput(formatState,tn);
-    }
-}
+
 
 void CalWidget::upClicked()
 {
-    display->setText(memory.up());
+    QString exptemp;
+    double restemp;
+    memory.up(exptemp,restemp);
+    display->setText(exptemp);
+    EqualState=false;
 }
 
 void CalWidget::downClicked()
 {
-    display->setText(memory.down());
+    QString exptemp;
+    double restemp;
+    memory.down(exptemp,restemp);
+    display->setText(exptemp);
+    EqualState=false;
 }
 
 /*void CalWidget::NegtiveClicked()
@@ -288,7 +283,7 @@ void CalWidget::downClicked()
     }
 }*/
 
-void CalWidget::formatButtonClicked()
+/*void CalWidget::formatButtonClicked()
 {
     bool ok;
     int t=qobject_cast<Mainwindow*>(this->parent())->formatEdit->text().toInt(&ok);
@@ -302,5 +297,5 @@ void CalWidget::formatButtonClicked()
         QMessageBox::information(this,"错误","输入数字错误！\n"
                                            "请输入大于等于0小于等于15的整数！");
     }
-}
+}*/
 

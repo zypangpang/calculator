@@ -14,11 +14,19 @@ public:
     ~AdvancedCalwidget(){}
 private slots:
     void RandClicked();
-    void formatButtonClicked();
+    void formatEditChanged(int val);
     void radBoxStatusChanged(int);
     void CAllClicked();
     void AnsClicked();
     void doInputMannual();
+    void upClicked();
+    void downClicked();
+    void doFormatCheckBoxChanged(int State);
+    void fractionClicked();
+    void equationClicked();
+    void statisticClicked();
+    void iClicked();
+    void polyClicked();
     //void isRoundChanged(int);
 private:
     QHBoxLayout* alayout;

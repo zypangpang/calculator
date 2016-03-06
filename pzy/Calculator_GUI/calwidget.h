@@ -36,18 +36,17 @@ private slots:
     //void PowerClicked();
     void EqualClicked();
     void PointClicked();
-    void doFormatCheckBoxChanged(int State);
     //void NegtiveClicked();
-    void upClicked();
-    void downClicked();
-    virtual void formatButtonClicked();
+    virtual void upClicked();
+    virtual void downClicked();
+    //virtual void formatButtonClicked();
 protected:
     //bool isRound;
     QGridLayout* layout;
     Button* CreatButton(const QString& text, const char* slot);
     int floatNumber;
     QLineEdit* display;
-    virtual void formatOutput(int state,double n);
+    virtual void formatOutput(int state, double n);
     Button* DigitButton[10];
     Expression expression;
     FORMAT formatState;

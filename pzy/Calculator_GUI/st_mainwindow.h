@@ -1,60 +1,80 @@
-#ifndef STMainWindow_H
-#define STMainWindow_H
+#ifndef ST_MAINWINDOW_H
+#define ST_MAINWINDOW_H
 
 #include <QMainWindow>
+#include "statistics.h"
 #include<QApplication>
 #include<QWidget>
 #include<QtWidgets>
 
 namespace Ui {
-class STMainWindow;
+class ST_MainWindow;
 }
 
-class STMainWindow : public QMainWindow
+class ST_MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit STMainWindow(QMainWindow *parent = 0);
-    ~STMainWindow();
+    explicit ST_MainWindow(QWidget *parent = 0);
+    ~ST_MainWindow();
+
+private slots:
+    void on_pushButton_12_clicked();
+
+    void on_pushButton_13_clicked();
+
+    void on_pushButton_14_clicked();
+
+    void on_pushButton_8_clicked();
+
+    void on_pushButton_9_clicked();
+
+    void on_pushButton_10_clicked();
+
+    void on_pushButton_4_clicked();
+
+    void on_pushButton_5_clicked();
+
+    void on_pushButton_6_clicked();
+
+    void on_pushButton_15_clicked();
+
+    void on_pushButton_7_clicked();
+
+    void on_pushButton_11_clicked();
+
+    void on_pushButton_26_clicked();
+
+    void on_pushButton_18_clicked();
+
+    void on_pushButton_19_clicked();
+
+    void on_pushButton_20_clicked();
+
+    void on_pushButton_21_clicked();
+
+    void on_pushButton_17_clicked();
+
+    void on_pushButton_16_clicked();
+
+    void on_pushButton_22_clicked();
+
+    void on_pushButton_23_clicked();
+
+    void on_pushButton_24_clicked();
+
+    void on_pushButton_25_clicked();
+
+    void on_pushButton_clicked();
+
+    void on_pushButton_27_clicked();
+
+    void on_pushButton_2_clicked();
 
 private:
-    Ui::STMainWindow *ui;
-    QToolBar* mainToolBar;
-    //QAction* advancedMode;
-    //QAction* inputData;
-    QAction* actAbout;
-    QAction* actHelp;
-private slots:
-   // void doAdvancedMode();
-    void doHelp();
-    void doAbout();
-    void on_button1_clicked();
-    void on_button2_clicked();
-    void on_button3_clicked();
-    void on_button0_clicked();
-    void on_button4_clicked();
-    void on_button5_clicked();
-    void on_button6_clicked();
-    void on_button7_clicked();
-    void on_button8_clicked();
-    void on_button9_clicked();
-    void on_button_point_clicked();
-    void on_button_neg_clicked();
-    void on_button_space_clicked();
-    void on_button_erase_clicked();
-    void on_button_eraseAll_clicked();
-    void on_button_sum_clicked();
-    void on_button_dsum_clicked();
-    void on_button_svar_clicked();
-    void on_button_uvar_clicked();
-    void on_button_var_clicked();
-    void on_button_ave_clicked();
-    void on_button_sort_clicked();
-    void on_button_rsort_clicked();
-    void on_button_mid_clicked();
-    void on_pushButton_clicked();
+    Ui::ST_MainWindow *ui;
+    statistics s;
 };
 
-
-#endif // STMainWindow_H
+#endif // ST_MAINWINDOW_H

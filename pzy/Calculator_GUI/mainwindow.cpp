@@ -55,7 +55,9 @@ void Mainwindow::doAdvancedMode()
 void Mainwindow::doHelp()
 {
     QMessageBox::information(this,"帮助","1.支持的数的范围：大于-1e+16小于1e+16\n"
-                                       "2.默认有效数字位数为6");
+                                       "2.有效数字位数为6位\n"
+                                       "3.“%”为取模运算，不是百分数\n"
+                                       "4.不支持计算负数的小数次幂，请先判断结果的符号，再对绝对值求幂");
 
 }
 void Mainwindow::doAbout()

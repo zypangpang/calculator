@@ -1,231 +1,214 @@
-#include "st_mainWindow.h"
-#include "ui_STMainWindow.h"
-#include "statistics.h"
-STMainWindow::STMainWindow(QMainWindow *parent) :
+#include "st_mainwindow.h"
+#include "ui_st_mainwindow.h"
+
+ST_MainWindow::ST_MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::STMainWindow)
+    ui(new Ui::ST_MainWindow)
 {
     ui->setupUi(this);
-    mainToolBar=new QToolBar(this);
-    mainToolBar->setAllowedAreas(Qt::TopToolBarArea);
-    actAbout=mainToolBar->addAction("关于",this,SLOT(doAbout()));
-    actHelp=mainToolBar->addAction("帮助",this,SLOT(doHelp()));
-    setWindowTitle("统计功能");
-    addToolBar(mainToolBar);
-    mainToolBar->setFloatable(false);
-    mainToolBar->setMovable(false);
-    setFixedSize(404,279);
-
 }
 
-void STMainWindow::doHelp()
-{
-    QMessageBox::information(this,"帮助","输入格式：\n1.每个数据后要有一个空格;\n"
-                                       "2. 连续输入两个空格默认输入数据0\n"
-                                       "3.每次改变数据后需重新按相应功能键来刷新结果\n"
-                                       "示例："
-                                       "(1.2 -2.3 4 2 )");
-}
-
-void STMainWindow::doAbout()
-{
-    QMessageBox::about(this,"关于","统计模块:\n""设计者：杨云飞");
-}
-
-STMainWindow::~STMainWindow()
+ST_MainWindow::~ST_MainWindow()
 {
     delete ui;
 }
 
-statistics s;
-
-QString temp;
-QString display;
-void STMainWindow::on_button1_clicked()
+void ST_MainWindow::on_pushButton_12_clicked()
 {
-    temp=temp.append('1');
-    display=display.append('1');
-    ui->input->setText(display);
-}
-
-void STMainWindow::on_button2_clicked()
-{
-    temp=temp.append('2');
-    display=display.append('2');
-    ui->input->setText(display);
-}
-
-void STMainWindow::on_button3_clicked()
-{
-    temp=temp.append('3');
-    display=display.append('3');
-    ui->input->setText(display);
-}
-
-void STMainWindow::on_button0_clicked()
-{
-    temp=temp.append('0');
-    display=display.append('0');
-    ui->input->setText(display);
-}
-
-
-void STMainWindow::on_button4_clicked()
-{
-    temp=temp.append('4');
-    display=display.append('4');
-    ui->input->setText(display);
-}
-
-void STMainWindow::on_button5_clicked()
-{
-    temp=temp.append('5');
-    display=display.append('5');
-    ui->input->setText(display);
-}
-
-void STMainWindow::on_button6_clicked()
-{
-    temp=temp.append('6');
-    display=display.append('6');
-    ui->input->setText(display);
-}
-
-void STMainWindow::on_button7_clicked()
-{
-    temp=temp.append('7');
-    display=display.append('7');
-    ui->input->setText(display);
-}
-
-void STMainWindow::on_button8_clicked()
-{
-    temp=temp.append('8');
-    display=display.append('8');
-    ui->input->setText(display);
-}
-void STMainWindow::on_button9_clicked()
-{
-    temp=temp.append('9');
-    display=display.append('9');
-    ui->input->setText(display);
-}
-
-void STMainWindow::on_button_point_clicked()
-{
-    temp=temp.append('.');
-    display=display.append('.');
-    ui->input->setText(display);
-}
-
-void STMainWindow::on_button_neg_clicked()
-{
-
-    if(temp.isEmpty()){
-        temp=temp.append('-');
-        display=display.append('-');
-    }
-    ui->input->setText(display);
-}
-
-void STMainWindow::on_button_space_clicked()
-{
-    bool ok;
-    double num=temp.toDouble(&ok);
-    s.AddData(num);
-    temp="";
-    display=display.append(" ");
-    ui->input->setText(display);
-}
-
-void STMainWindow::on_button_erase_clicked()
-{
-    if(display.isEmpty()){
-        ui->input->setText("Erase error");
+    QString t=ui->lineEdit_2->text();
+    if(t=="0"){
+        ui->lineEdit_2->setText("1");
     }else{
-        if(!temp.isEmpty()){
-            display=display.left(display.size()-temp.size());
-            temp="";
-        }else{
-           s.Erase();
-           display=s.renew();
-        }
-        ui->input->setText(display);
+        ui->lineEdit_2->setText(t+"1");
     }
 }
 
-void STMainWindow::on_button_eraseAll_clicked()
+void ST_MainWindow::on_pushButton_13_clicked()
 {
-    temp="";
-    display="";
-    s.empty();
-    ui->input->setText(display);
+    QString t=ui->lineEdit_2->text();
+    if(t=="0"){
+        ui->lineEdit_2->setText("2");
+    }else{
+        ui->lineEdit_2->setText(t+"2");
+    }
 }
 
-void STMainWindow::on_button_sum_clicked()
+void ST_MainWindow::on_pushButton_14_clicked()
 {
-    double sum;
-    sum=s.Sum();
-    ui->lcdNumber->display(sum);
+    QString t=ui->lineEdit_2->text();
+    if(t=="0"){
+        ui->lineEdit_2->setText("3");
+    }else{
+        ui->lineEdit_2->setText(t+"3");
+    }
 }
 
-void STMainWindow::on_button_dsum_clicked()
+void ST_MainWindow::on_pushButton_8_clicked()
 {
-    double Dsum;
-    Dsum=s.DSum();
-    ui->lcdNumber->display(Dsum);
+    QString t=ui->lineEdit_2->text();
+    if(t=="0"){
+        ui->lineEdit_2->setText("4");
+    }else{
+        ui->lineEdit_2->setText(t+"4");
+    }
 }
 
-
-void STMainWindow::on_button_svar_clicked()
+void ST_MainWindow::on_pushButton_9_clicked()
 {
-    double svar;
-    svar=s.StaVar();
-    ui->lcdNumber->display(svar);
+    QString t=ui->lineEdit_2->text();
+    if(t=="0"){
+        ui->lineEdit_2->setText("5");
+    }else{
+        ui->lineEdit_2->setText(t+"5");
+    }
 }
 
-
-void STMainWindow::on_button_uvar_clicked()
+void ST_MainWindow::on_pushButton_10_clicked()
 {
-    double uvar;
-    uvar=s.UnVariance();
-    ui->lcdNumber->display(uvar);
+    QString t=ui->lineEdit_2->text();
+    if(t=="0"){
+        ui->lineEdit_2->setText("6");
+    }else{
+        ui->lineEdit_2->setText(t+"6");
+    }
 }
 
-void STMainWindow::on_button_var_clicked()
+void ST_MainWindow::on_pushButton_4_clicked()
 {
-    double var;
-    var=s.Variance();
-    ui->lcdNumber->display(var);
+    QString t=ui->lineEdit_2->text();
+    if(t=="0"){
+        ui->lineEdit_2->setText("7");
+    }else{
+        ui->lineEdit_2->setText(t+"7");
+    }
 }
 
-void STMainWindow::on_button_ave_clicked()
+void ST_MainWindow::on_pushButton_5_clicked()
 {
-    double ave;
-    ave=s.Average();
-    ui->lcdNumber->display(ave);
+    QString t=ui->lineEdit_2->text();
+    if(t=="0"){
+        ui->lineEdit_2->setText("8");
+    }else{
+        ui->lineEdit_2->setText(t+"8");
+    }
 }
 
-void STMainWindow::on_button_sort_clicked()
+void ST_MainWindow::on_pushButton_6_clicked()
 {
-    display=s.Sort();
-    ui->input->setText(display);
+    QString t=ui->lineEdit_2->text();
+    if(t=="0"){
+        ui->lineEdit_2->setText("9");
+    }else{
+        ui->lineEdit_2->setText(t+"9");
+    }
 }
 
-void STMainWindow::on_button_rsort_clicked()
+void ST_MainWindow::on_pushButton_15_clicked()
 {
-    display=s.rSort();
-    ui->input->setText(display);
+    QString t=ui->lineEdit_2->text();
+    if(t=="0"){
+        ui->lineEdit_2->setText("0");
+    }else{
+        ui->lineEdit_2->setText(t+"0");
+    }
 }
 
-void STMainWindow::on_button_mid_clicked()
+void ST_MainWindow::on_pushButton_7_clicked()
 {
-    double mid;
-    mid=s.Midnum();
-    ui->lcdNumber->display(mid);
+    QString t=ui->lineEdit_2->text();
+    if(t=="0"){
+        ui->lineEdit_2->setText("-");
+    }
 }
 
-void STMainWindow::on_pushButton_clicked()
+void ST_MainWindow::on_pushButton_11_clicked()
+{
+    QString t=ui->lineEdit_2->text();
+    ui->lineEdit_2->setText(t+".");
+}
+
+void ST_MainWindow::on_pushButton_26_clicked()      //清除
+{
+    QString t=ui->lineEdit->text();
+    if(t!="0"){
+        s.Erase();
+        ui->lineEdit->setText(s.renew());
+    }
+}
+
+void ST_MainWindow::on_pushButton_18_clicked()  //和
+{
+    ui->lcdNumber->display(s.Sum());
+}
+
+void ST_MainWindow::on_pushButton_19_clicked()  //平方和
+{
+    ui->lcdNumber->display(s.DSum());
+}
+
+void ST_MainWindow::on_pushButton_20_clicked()   //标准差
+{
+    ui->lcdNumber->display(s.StaVar());
+}
+
+void ST_MainWindow::on_pushButton_21_clicked()    //无偏方差
+{
+    ui->lcdNumber->display(s.UnVariance());
+}
+
+void ST_MainWindow::on_pushButton_17_clicked()     //方差
+{
+    ui->lcdNumber->display(s.Variance());
+}
+
+void ST_MainWindow::on_pushButton_16_clicked()   //均值
+{
+    ui->lcdNumber->display(s.Average());
+}
+
+void ST_MainWindow::on_pushButton_22_clicked()   //中位数
+{
+    ui->lcdNumber->display(s.Midnum());
+}
+
+void ST_MainWindow::on_pushButton_23_clicked()
 {
     ui->lcdNumber->display(s.Max_Min());
+}
+
+void ST_MainWindow::on_pushButton_24_clicked() //升序
+{
+    ui->lineEdit->setText(s.Sort());
+}
+
+void ST_MainWindow::on_pushButton_25_clicked() //降序
+{
+    ui->lineEdit->setText(s.rSort());
+}
+
+void ST_MainWindow::on_pushButton_clicked()  //添加
+{
+    QString t=ui->lineEdit_2->text();
+    bool ok;
+    double num=t.toDouble(&ok);
+    if(ok){
+        s.AddData(num);
+        ui->lineEdit_2->setText("0");
+        ui->lineEdit->setText(s.renew());
+    }
+}
+
+void ST_MainWindow::on_pushButton_27_clicked()
+{
+    ui->lineEdit->setText("0");
+    ui->lineEdit_2->setText("0");
+    s.empty();
+}
+
+void ST_MainWindow::on_pushButton_2_clicked()                 //帮助
+{
+    QMessageBox::information(this,"帮助","1:按添加键将数据加入数据集，支持小数，负数\n"
+                                       "2:清除用于删除上一个输入数据，清除全部用于清空数据\n"
+                                       "3:统计模块：设计者  杨云飞\n"
+                             );
 }

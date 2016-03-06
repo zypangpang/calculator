@@ -10,22 +10,24 @@ class AdvancedMainwindow:public QMainWindow
 public:
     AdvancedMainwindow(QMainWindow* parent=0);
     ~AdvancedMainwindow(){}
-    QLineEdit* formatEdit;
+   // QLineEdit* formatEdit;
 private slots:
     void backToBasicClicked();
     void doAbout();
     void helpClicked();
-    void doStatistic();
+    void doCustomVariable();
+    void doBaseChange();
+    //void doStatistic();
 private:
     //QToolBar* mainTool;
     QStatusBar* statusBar;
     QCheckBox* formatCheckBox;
     QPushButton* formatButton;
-    QMenuBar* mbar;
+    //QMenuBar* mbar;
     //QMenu* menuFormat;
-    QMenu* menuStatistic;
-    QMenu* menuPolynome;
-    QMenu* menuCustomFunction;
+    //QMenu* menuStatistic;
+    //QMenu* menuPolynome;
+    QAction* actCustomVariable;
     QToolBar* mToolBar;
     //QAction* actDegOrRad;
     //QAction* actFloatDigit;
@@ -33,7 +35,8 @@ private:
     QAction* inputExpressionMannual;
     QAction* actAbout;
     QAction* actHelp;
-    QAction* actStatistic;
+    QAction* actBaseChange;
+    //QAction* actStatistic;
     AdvancedCalwidget* acal;
 
 

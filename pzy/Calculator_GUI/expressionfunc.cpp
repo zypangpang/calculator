@@ -170,8 +170,24 @@ double Expression::FunCal(int funcnum, double x)
      int op=0;
      for(int i=0;expstring[i]!='\0';++i)
      {
-         //deal with variables:if(expstring[i].isAlpha()) using the "Variable" class
-         //"Variable" class need to be completed.
+         if(expstring[i].isLetter())
+         {
+             int begin=i;
+             while(expstring[i]!='(')
+             {
+                 if(expstring[i]=='\0')
+                     return false;
+                ++i;
+             }
+             int fnum=FunNum(begin-1,i);
+             if(fnum==-1) return false;
+             //if(fcresult!=fcresult||fcresult+1==fcresult) return false;
+             //sn.push(fcresult);
+             sc.push(fnum);
+             sc.push(4);
+         }
+         else
+         {
          switch(expstring[i].unicode())
          {
          case '.':
@@ -250,7 +266,7 @@ double Expression::FunCal(int funcnum, double x)
          case '^':
              if(!opcal(5)) return false;
              break;
-         case ' ':
+         /*case ' ':
          {
              int begin=i;
              while(expstring[i]!='(')
@@ -266,7 +282,7 @@ double Expression::FunCal(int funcnum, double x)
              sc.push(fnum);
              sc.push(4);
              break;
-         }
+         }*/
          case '(':
          {
              /*int b=i;
@@ -291,7 +307,7 @@ double Expression::FunCal(int funcnum, double x)
          {
              while(sc.size()>1&&(op=sc.top())!=4)
              {
-                 if(op>7)
+                 /*if(op>7)
                  {
                      if(sn.empty()) return false;
                      double m=mypop(sn);
@@ -301,7 +317,7 @@ double Expression::FunCal(int funcnum, double x)
                      if(m!=m||m+1==m)
                         return false;
                      continue;
-                 }
+                 }*/
                  if(sn.empty()) return false;
                  double m=mypop(sn);
                  if(sn.empty()) return false;
@@ -311,14 +327,22 @@ double Expression::FunCal(int funcnum, double x)
              }
              sc.pop();
              if(sc.empty()) return false;
+             if((op=sc.top())>7)
+             {
+                 if(sn.empty()) return false;
+                 double m=mypop(sn);
+                 m=FunCal(op,m);
+                 sn.push(m);
+                 sc.pop();
+                 if(m!=m||m+1==m)
+                    return false;
+             }
              break;
          }
          default:
              return false;
          }
-
-
-
+         }
      }
      while(sc.size()>1)
      {
@@ -347,7 +371,7 @@ double Expression::FunCal(int funcnum, double x)
          sc.pop();
      }
      //sc.pop();
-     if(sn.empty())return false;
+     if(sn.size()!=1)return false;
      result=mypop(sn);
      return true;
  }
@@ -367,11 +391,12 @@ double Expression::FunCal(int funcnum, double x)
      {
          sn.pop();
      }
-     while(sc.size()!=1)
+     while(!sc.empty())
      {
          sc.pop();
      }
-     legal=true;
+     sc.push(4);
+     result=0;
  }
 
  bool Expression::MyToDouble(const QString& numstring)

@@ -98,11 +98,15 @@ double statistics ::StaVar(){
 QString statistics ::renew(){
     QString str;
     double num;
-    vector<double>::iterator it;
-    for(it=sta.begin();it!=sta.end();it++){
-        num=*it;
-        str.append(toString(num));
-               str.append(" ");
+    if(sta.empty()){
+        str="0";
+    }else{
+        vector<double>::iterator it;
+        for(it=sta.begin();it!=sta.end();it++){
+            num=*it;
+            str.append(toString(num));
+            str.append(" ");
+        }
     }
     return str;
 }
