@@ -37,7 +37,6 @@ MainWindowPoly::~MainWindowPoly()
 {
     delete ui;
 }
-
 QString ptem="";
 QString tempcoef;
 QString tempexp;
@@ -100,12 +99,16 @@ void MainWindowPoly::on_button_pos_clicked()
 void MainWindowPoly::on_button_erasecoef_clicked()
 {
     ptem="";
+    tempcoef="";
+    tempcoef=tempcoef.append('0');
     ui->inputcoef->setText(ptem);  //将页面清空
 }
 
 void MainWindowPoly::on_button_eraseexp_clicked()
 {
     ptem="";
+    tempexp="";
+    tempexp=tempexp.append('0');
     ui->inputexp->setText(ptem);   //将页面清空
 }
 
@@ -155,15 +158,7 @@ void MainWindowPoly::on_button_Diff_clicked()
     ui->answer->setText(display);
 }
 
-// 为什么空格键改不了 没能实现清除结果的功能 但是代码没有问题
-/*void MainWindowPoly::on_button_delete_clicked()
-{
-    tempcoef="";
-    tempexp="";
-    ui->inputexp->setText("");
-    ui->inputcoef->setText("");
-    ui->answer->setText("");
-}*/
+
 
 void MainWindowPoly::on_button_erasecoef_2_clicked()
 {

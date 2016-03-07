@@ -96,7 +96,8 @@ QString Poly:: Diff()            //求导数(静态成员函数)
     QString str,temp;
     Poly * t=(Poly::head)->next;
     double numcoef,numexp,num;
-    if(t->exp==0) t=t->next;
+    if(t!=NULL && t->exp==0) t=t->next;
+
     while(t!=NULL)
     {
       numcoef=(t->coef)*(t->exp);
