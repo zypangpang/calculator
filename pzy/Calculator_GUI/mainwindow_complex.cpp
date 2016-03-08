@@ -9,7 +9,6 @@ MainWindowComplex::MainWindowComplex(QWidget *parent) :// 基类构造函数
     ui->setupUi(this);mainToolBar=new QToolBar(this);
     mainToolBar->setAllowedAreas(Qt::TopToolBarArea);
     mainToolBar->setMovable(false);
-    actAbout=mainToolBar->addAction("关于",this,SLOT(doAbout()));
     actHelp=mainToolBar->addAction("帮助",this,SLOT(doHelp()));
     setWindowTitle("复数运算");
     addToolBar(mainToolBar);
@@ -27,11 +26,6 @@ void MainWindowComplex::doHelp()
                                                     "2.清除结果：将当前操作结果全部清除，重新开始");
 
 
-}
-
-void MainWindowComplex::doAbout()
-{
-    QMessageBox::about(this,"关于","复数模块:\n""设计者：赵瑞雪");
 }
 
 

@@ -29,8 +29,6 @@ private:
 private slots:
     void doHelp();
 
-    void doAbout();
-
     void on_button7_clicked();
 
     void on_button8_clicked();

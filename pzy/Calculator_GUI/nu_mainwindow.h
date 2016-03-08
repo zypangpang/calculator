@@ -24,14 +24,12 @@ private:
     QToolBar* mainToolBar;
     QAction* advancedMode;
     QAction* inputData;
-    QAction* actAbout;
     QAction* actHelp;
 
 
 private slots:
    // void doAdvancedMode();
     void doHelp();
-    void doAbout();
     void on_button1_clicked();
     void on_button2_clicked();
     void on_button3_clicked();

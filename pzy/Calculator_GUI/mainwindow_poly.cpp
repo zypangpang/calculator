@@ -10,7 +10,6 @@ MainWindowPoly::MainWindowPoly(QWidget *parent) :
     mainToolBar=new QToolBar(this);
     mainToolBar->setAllowedAreas(Qt::TopToolBarArea);
     mainToolBar->setMovable(false);
-    actAbout=mainToolBar->addAction("关于",this,SLOT(doAbout()));
     actHelp=mainToolBar->addAction("帮助",this,SLOT(doHelp()));
     setWindowTitle("多项式功能");
     addToolBar(mainToolBar);
@@ -28,10 +27,6 @@ void MainWindowPoly::doHelp()
                                        "\n注意事项:\n1. 清除结果按钮将本次结果全部清空，重新开始下一次操作");
 }
 
-void MainWindowPoly::doAbout()
-{
-    QMessageBox::about(this,"关于","多项式模块:\n""设计者：赵瑞雪");
-}
 
 MainWindowPoly::~MainWindowPoly()
 {

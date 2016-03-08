@@ -209,6 +209,5 @@ void ST_MainWindow::on_pushButton_2_clicked()                 //帮助
 {
     QMessageBox::information(this,"帮助","1:按添加键将数据加入数据集，支持小数，负数\n"
                                        "2:清除用于删除上一个输入数据，清除全部用于清空数据\n"
-                                       "3:统计模块：设计者  杨云飞\n"
                              );
 }

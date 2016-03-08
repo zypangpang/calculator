@@ -11,7 +11,6 @@ NUMainWindow::NUMainWindow(QWidget *parent) :
    ui->setupUi(this);
     mainToolBar=new QToolBar(this);
     mainToolBar->setAllowedAreas(Qt::TopToolBarArea);
-    actAbout=mainToolBar->addAction("关于",this,SLOT(doAbout()));
     actHelp=mainToolBar->addAction("帮助",this,SLOT(doHelp()));
     setWindowTitle("进制转换功能");
     addToolBar(mainToolBar);
@@ -27,10 +26,7 @@ void NUMainWindow::doHelp()
 
 }
 
-void NUMainWindow::doAbout()
-{
-    QMessageBox::about(this,"关于","进制模块:设计者：王钰昭");
-}
+
 
 NUMainWindow::~NUMainWindow()
 {
