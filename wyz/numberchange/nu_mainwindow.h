@@ -30,8 +30,8 @@ private:
 
 private slots:
    // void doAdvancedMode();
-    void doHelp();
-    void doAbout();
+    //void doHelp();
+
     void on_button1_clicked();
     void on_button2_clicked();
     void on_button3_clicked();
@@ -55,6 +55,7 @@ private slots:
     void on_button_eightTwo_clicked();
     void on_button_eightTen_clicked();
     void on_button_eightSixteen_clicked();
+    void on_pushButton_clicked();
 };
 
 
