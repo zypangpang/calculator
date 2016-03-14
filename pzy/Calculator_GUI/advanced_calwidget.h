@@ -27,6 +27,7 @@ private slots:
     void statisticClicked();
     void iClicked();
     void polyClicked();
+    void showError();
     //void isRoundChanged(int);
 private:
     QHBoxLayout* alayout;

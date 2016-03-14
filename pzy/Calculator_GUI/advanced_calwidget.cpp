@@ -163,6 +163,11 @@ void AdvancedCalwidget::polyClicked()
     poly->setAttribute(Qt::WA_DeleteOnClose,true);
     poly->show();
 }
+
+void AdvancedCalwidget::showError()
+{
+    resultDisplay->setText("表达式错误或数值溢出");
+}
 /*void AdvancedCalwidget::formatButtonClicked()
 {
     bool ok;
@@ -261,7 +266,7 @@ void AdvancedCalwidget::doInputMannual()
     {
         double tresult=expression.GetResult();
         if(tresult!=tresult||tresult+1==tresult)
-            display->setText("表达式错误或数值溢出！");
+            showError();
         else
         {
             memory.input(text,tresult);
@@ -271,7 +276,7 @@ void AdvancedCalwidget::doInputMannual()
     }
     else
     {
-        display->setText("表达式错误或数值溢出！");
+       showError();
     }
     }
 }

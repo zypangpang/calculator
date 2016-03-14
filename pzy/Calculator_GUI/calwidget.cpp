@@ -215,7 +215,7 @@ void CalWidget::EqualClicked()
     {
         double tresult=expression.GetResult();
         if(tresult!=tresult||tresult+1==tresult)
-            display->setText("表达式错误或数值溢出！");
+           showError();
         else
         {
             memory.input(t,tresult);
@@ -226,7 +226,7 @@ void CalWidget::EqualClicked()
     }
     else
     {
-        display->setText("表达式错误或数值溢出！");
+        showError();
     }
     //}
     //else
@@ -268,6 +268,11 @@ void CalWidget::downClicked()
     memory.down(exptemp,restemp);
     display->setText(exptemp);
     EqualState=false;
+}
+
+void CalWidget::showError()
+{
+    display->setText("表达式错误或数值溢出");
 }
 
 /*void CalWidget::NegtiveClicked()

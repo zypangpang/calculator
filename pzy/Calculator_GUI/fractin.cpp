@@ -22,7 +22,8 @@ void fractin::doHelp()
 {
     QMessageBox::information(this,"帮助","输入格式：\n1.表达式仅支持分数运算;\n"
                                        "2. ‘|’为分数线;\n"
-                                       "3.整数，浮点数可通过“转换”按钮转化为分数;\n"
+                                       "3. 负数应加括号。如：-3|4应写成(-3|4);\n"
+                                       "4.整数，浮点数可通过“转换”按钮转化为分数;\n"
                                           "分数也可通过“转换”按钮转化为浮点");
 }
 
@@ -214,7 +215,7 @@ void fractin::on_equal_clicked()
            }
            ch=text[0];
            text.remove(0,1);
-           if(!(ch.isDigit()||ch=='(')){
+           if(!(ch.isDigit()||ch=='(')||(ch.isDigit()&&text.isEmpty())){
                text="格式不支持！";
                ui->show->setText(text);
                return;
@@ -230,10 +231,62 @@ void fractin::on_equal_clicked()
             }
             ch=text[0];
             text.remove(0,1);
-            if(!ch.isDigit()&&ch!='('){
+            if(!ch.isDigit()&&ch!='('&&ch!='-'){
                 text="格式不支持！";
                 ui->show->setText(text);
                 return;
+            }
+            if(ch=='-'){
+                if(text.isEmpty()){
+                    text="格式不支持！";
+                    ui->show->setText(text);
+                    return;
+                }
+                ch=text[0];
+                text.remove(0,1);
+                if(!ch.isDigit()){
+                    text="格式不支持！";
+                    ui->show->setText(text);
+                    return;
+                }
+                while(ch.isDigit()&&!text.isEmpty()){
+                    ch=text[0];
+                    text.remove(0,1);
+                }
+                if(text.isEmpty()||ch!='|'){
+                    text="格式不支持！";
+                    ui->show->setText(text);
+                    return;
+                }
+
+                ch=text[0];
+                text.remove(0,1);
+                while(ch.isDigit()&&!text.isEmpty()){
+                    ch=text[0];
+                    text.remove(0,1);
+                }
+                if(text.isEmpty()&&ch.isDigit()){
+                    text="格式不支持！";
+                    ui->show->setText(text);
+                    return;
+                }
+                if(ch!=')'){
+                    text="格式不支持！";
+                    ui->show->setText(text);
+                    return;
+                }
+                t.pop();
+                if(!text.isEmpty()){
+                ch=text[0];
+                text.remove(0,1);
+                if(ch.isDigit()||ch=='.'||ch=='('||ch=='|'){
+                    text="格式不支持！";
+                    ui->show->setText(text);
+                    return;
+                }
+                }
+                else
+                    ch='0';
             }
             continue;
         }
@@ -299,6 +352,7 @@ void fractin::on_point_clicked()
 void fractin::on_simplify_clicked()
 {
     int d=0,c=0;
+    bool negtive=false;
     if(text.isEmpty()){
         text="格式不支持！";
         ui->show->setText(text);
@@ -306,6 +360,16 @@ void fractin::on_simplify_clicked()
     }
     QChar ch=text[0];
     text.remove(0,1);
+    if(ch=='-'){
+        negtive=true;
+        if(text.isEmpty()){
+            text="格式不支持！";
+            ui->show->setText(text);
+            return;
+        }
+        ch=text[0];
+        text.remove(0,1);
+    }
     if(!ch.isDigit()){
         text="格式不支持！";
         ui->show->setText(text);
@@ -338,7 +402,10 @@ void fractin::on_simplify_clicked()
         c=c*10+ch.unicode()-48;
         Fraction f;
         f.Sim(d,c);
-        text=QString::number(f.getnumer(),10)+"|"+QString::number(f.getdenom(),10);
+        if(negtive==true)
+            text="-"+QString::number(f.getnumer(),10)+"|"+QString::number(f.getdenom(),10);
+        else
+            text=QString::number(f.getnumer(),10)+"|"+QString::number(f.getdenom(),10);
         ui->show->setText(text);
         return;
     }
@@ -353,6 +420,7 @@ void fractin::on_simplify_clicked()
 void fractin::on_switchButton_clicked()
 {
     int d=0,c=0;
+    bool negtive=false;
     if(text.isEmpty()){
         text="格式不支持！";
         ui->show->setText(text);
@@ -360,6 +428,16 @@ void fractin::on_switchButton_clicked()
     }
     QChar ch=text[0];
     text.remove(0,1);
+    if(ch=='-'){
+        negtive=true;
+        if(text.isEmpty()){
+            text="格式不支持！";
+            ui->show->setText(text);
+            return;
+        }
+        ch=text[0];
+        text.remove(0,1);
+    }
     if(!ch.isDigit()){
         text="格式不支持！";
         ui->show->setText(text);
@@ -372,7 +450,10 @@ void fractin::on_switchButton_clicked()
     }
     if(ch.isDigit()){
         d=d*10+ch.unicode()-48;
-        text=QString::number(d,10)+"|"+QString::number(1,10);
+        if(negtive==false)
+            text=QString::number(d,10)+"|"+QString::number(1,10);
+        else
+            text="-"+QString::number(d,10)+"|"+QString::number(1,10);
         ui->show->setText(text);
         return;
     }
@@ -392,7 +473,10 @@ void fractin::on_switchButton_clicked()
         if(ch.isDigit()){
             c=c*10+ch.unicode()-48;
             float l=(float)d/c;
-            text=QString("%1").arg(l);
+            if(negtive==false)
+                text=QString("%1").arg(l);
+            else
+                text="-"+QString("%1").arg(l);
             ui->show->setText(text);
             return;
         }
@@ -421,7 +505,11 @@ void fractin::on_switchButton_clicked()
             d=d*10+ch.unicode()-48;
             Fraction f;
             f.Sim(d,c);
-            text=QString::number(f.getnumer(),10)+"|"+QString::number(f.getdenom(),10);
+            if(negtive==false)
+                text=QString::number(f.getnumer(),10)+"|"+QString::number(f.getdenom(),10);
+            else
+                text="-"+QString::number(f.getnumer(),10)+"|"+QString::number(f.getdenom(),10);
+                //text=QString::number(f.getdenom(),10);
             ui->show->setText(text);
             return;
         }

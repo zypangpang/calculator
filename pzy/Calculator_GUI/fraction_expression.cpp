@@ -10,7 +10,6 @@ void Fraction::Ret()
 {
     cout<<"除数不合法！"<<endl;
     //exit(1);
-
 }
 
 
@@ -45,7 +44,7 @@ void Fraction::Sim(int numer1, int denom1)
     }
     numer=numer1/denom2;
     denom=denom1/denom2;
-    if(numer*denom<0&&numer>0){
+    if((numer>0&&denom<0)||(numer<0&&denom<0)){
         numer=(-1)*numer;
         denom=(-1)*denom;
     }
@@ -170,7 +169,38 @@ QString  Fraction_expression::input(QString str){
         }
         if(!ch.isDigit())
            switch(ch.unicode()){
-            case 40:c.push(ch);
+            case 40:if(str[0]=='-'){
+                   str.remove(0,1);
+                   ch=str[0];
+                   str.remove(0,1);
+                   d=ch.unicode()-48;
+                   ch=str[0];
+                   str.remove(0,1);
+                   while(ch.isDigit()){
+                       d=d*10+ch.unicode()-48;
+                       ch=str[0];
+                       str.remove(0,1);
+                      //d=d*10+ch.unicode()-48;
+                   }
+                   s.push(d*(-1));
+                   //str.remove(0,1);
+                   ch=str[0];
+                   str.remove(0,1);
+                   d=ch.unicode()-48;
+                   ch=str[0];
+                   str.remove(0,1);
+                   while(ch.isDigit()){
+                       d=d*10+ch.unicode()-48;
+                       ch=str[0];
+                       str.remove(0,1);
+                       //d=d*10+ch.unicode()-48;
+                   }
+                   s.push(d);
+                   //ch=str[0];
+                   //str.remove(0,1);
+               }
+               else
+                c.push(ch);
                 break;
             case 41:while(c.top()!='(')
                         oper();

@@ -1,5 +1,5 @@
 <RCC>
     <qresource prefix="/image">
-        <file alias="cal_icon">images/Calculator.ico</file>
+        <file alias="calc_icon">images/Calculator.ico</file>
     </qresource>
 </RCC>

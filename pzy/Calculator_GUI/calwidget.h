@@ -39,6 +39,7 @@ private slots:
     //void NegtiveClicked();
     virtual void upClicked();
     virtual void downClicked();
+    virtual void showError();
     //virtual void formatButtonClicked();
 protected:
     //bool isRound;
